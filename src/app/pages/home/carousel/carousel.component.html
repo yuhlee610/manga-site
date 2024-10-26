@@ -1,5 +1,7 @@
-<swiper-container>
-  <swiper-slide>Slide 1</swiper-slide>
-  <swiper-slide>Slide 2</swiper-slide>
-  <swiper-slide>Slide 3</swiper-slide>
+<swiper-container loop="true" navigation="true" speed="500">
+  @for (manga of mangaList(); track manga.id) {
+    <swiper-slide class="featureCard">
+      <img [src]="manga | coverArt: 'lg'" [alt]="manga | imageAlt"  />
+    </swiper-slide>
+  }
 </swiper-container>

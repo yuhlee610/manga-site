@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { DefaultTranslatedLanguages, MangadexBaseUrl } from '../constants';
 import { GetSearchMangaRequestOptions, GetSearchMangaResponse } from '../../models/mangadex';
-import { Order } from '../../models/static';
+import { Includes, Order } from '../../models/static';
 import { buildQueryStringFromOptions } from '../utils';
 
 @Injectable({
@@ -19,6 +19,7 @@ export class MangaService {
         rating: Order.DESC,
       },
       limit: 5,
+      includes: [Includes.COVER_ART],
     });
   }
 
