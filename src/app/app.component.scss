@@ -1,0 +1,17 @@
+.layout {
+  min-height: 100vh;
+}
+
+.header,
+.content,
+.footer {
+  background-color: #0d0d0d;
+  color: #fff;
+}
+
+nz-header {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

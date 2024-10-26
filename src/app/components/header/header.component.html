@@ -1,0 +1,29 @@
+<div nz-flex nzJustify="space-between" nzAlign="center">
+  <nz-input-group [nzPrefix]="prefixTemplateSearch" class="input">
+    <input nz-input placeholder="Search here" />
+  </nz-input-group>
+  <ul class="links" nz-flex nzGap="48px">
+    <li>
+      <a
+        routerLink="/"
+        nz-typography
+        routerLinkActive="selected"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Home</a
+      >
+    </li>
+    <li>
+      <a routerLink="/my-list" nz-typography routerLinkActive="selected">My list</a>
+    </li>
+    <li>
+      <a routerLink="/history" nz-typography routerLinkActive="selected">History</a>
+    </li>
+    <li>
+      <a routerLink="/popular" nz-typography routerLinkActive="selected">Popular</a>
+    </li>
+  </ul>
+</div>
+
+<ng-template #prefixTemplateSearch
+  ><span nz-icon nzType="search" nzTheme="outline"></span
+></ng-template>
