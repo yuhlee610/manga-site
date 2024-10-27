@@ -1,7 +1,33 @@
-<swiper-container loop="true" navigation="true" speed="500">
+<nz-carousel nzEffect="scrollx" class="carousel" nzAutoPlay="true">
   @for (manga of mangaList(); track manga.id) {
-    <swiper-slide class="featureCard">
-      <img [src]="manga | coverArt: 'lg'" [alt]="manga | imageAlt"  />
-    </swiper-slide>
+    <div nz-carousel-content class="featureCard">
+      <img
+        class="backgroundImage"
+        [ngSrc]="manga | coverArt: 'lg'"
+        [alt]="manga | imageAlt"
+        fill
+        priority="true"
+      />
+      <div class="overlay"></div>
+      <div class="slideContent">
+        <img
+          [ngSrc]="manga | coverArt: 'lg'"
+          [alt]="manga | imageAlt"
+          height="550"
+          width="400"
+          priority="true"
+        />
+        <div>
+          <h2 nz-typography>{{ manga.attributes.title['en'] }}</h2>
+          <nz-flex nzWrap="wrap" nzGap="12">
+            @for (tag of manga.attributes.tags; track tag.id) {
+              <app-tag>{{ tag.attributes.name['en'] }}</app-tag>
+            }
+          </nz-flex>
+          <p class="description" nz-typography>{{ manga.attributes.description['en'] }}</p>
+          <p class="updatedAt">{{ manga.attributes.updatedAt | updatedAt }}</p>
+        </div>
+      </div>
+    </div>
   }
-</swiper-container>
+</nz-carousel>

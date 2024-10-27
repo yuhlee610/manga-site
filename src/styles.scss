@@ -1,6 +1,12 @@
 @import './reset.scss';
+@import './variables.scss';
 
+h2.ant-typography,
 .ant-typography {
-  letter-spacing: 1.2px;
+  letter-spacing: 1.1px;
   color: #fff;
+}
+
+.ant-carousel .slick-dots li.slick-active button {
+  background: $primary-color;
 }

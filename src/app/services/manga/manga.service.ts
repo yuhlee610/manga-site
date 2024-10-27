@@ -15,10 +15,10 @@ export class MangaService {
     return this.getMangaList({
       availableTranslatedLanguage: DefaultTranslatedLanguages,
       order: {
-        latestUploadedChapter: Order.DESC,
+        updatedAt: Order.DESC,
         rating: Order.DESC,
       },
-      limit: 5,
+      limit: 10,
       includes: [Includes.COVER_ART],
     });
   }

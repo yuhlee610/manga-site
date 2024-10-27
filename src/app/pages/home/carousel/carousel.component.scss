@@ -1,6 +1,52 @@
+@import '../../../../variables.scss';
+
+.carousel {
+  height: 614px;
+}
+
 .featureCard {
-  padding: 32px;
+  padding: 32px 24px;
   border-radius: 16px;
-  background-color: #1A1A1A;
-  max-height: 720px;
+  max-height: 614px;
+}
+
+.slideContent {
+  display: flex;
+  gap: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+[nz-icon] {
+  color: #3b3e42;
+}
+
+.description {
+  margin-top: 36px;
+  font-size: 18px;
+}
+
+h2 {
+  font-size: 36px;
+}
+
+.updatedAt {
+  font-style: italic;
+  color: #fff;
+  text-align: right;
+  margin-top: 40px;
+}
+
+.backgroundImage {
+  position: absolute;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgb(26, 26, 26, 0.7), rgb(26, 26, 26));
 }
