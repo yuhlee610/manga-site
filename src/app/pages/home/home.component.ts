@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { MangaService } from '../../services/manga/manga.service';
 import { Manga, MangaList } from '../../models/mangadex';
@@ -6,26 +6,38 @@ import { ActivatedRoute } from '@angular/router';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { CarouselComponent } from './carousel/carousel.component';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { map, switchMap } from 'rxjs';
+import { StatisticService } from '../../services/statistic/statistic.service';
+import { AsyncPipe } from '@angular/common';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NzButtonComponent, NzGridModule, CarouselComponent, NzTypographyModule],
+  imports: [
+    NzButtonComponent,
+    NzGridModule,
+    CarouselComponent,
+    NzTypographyModule,
+    AsyncPipe,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent implements OnInit {
-  private destroyRef = inject(DestroyRef);
+export class HomeComponent {
   private activatedRoute = inject(ActivatedRoute);
-  featureMangaList = signal<Manga[]>([]);
-
-  ngOnInit(): void {
-    const subscription = this.activatedRoute.data.subscribe((response) => {
-      const mangaList = response['featureMangaList'] as MangaList;
-      this.featureMangaList.set(mangaList.data);
-    });
-    this.destroyRef.onDestroy(() => subscription.unsubscribe());
-  }
+  private statisticService = inject(StatisticService);
+  featureMangaList = toSignal(
+    this.activatedRoute.data.pipe(map((data) => (data['featureMangaList'] as MangaList).data)),
+    { initialValue: [] }
+  );
+  statistics = toSignal(
+    toObservable(this.featureMangaList).pipe(
+      switchMap((mangaData) =>
+        this.statisticService.getStatisticsFromMangaList(mangaData as Manga[])
+      )
+    )
+  );
 }
 
 export const featureMangaListResolver = () => {

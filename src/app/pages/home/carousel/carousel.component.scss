@@ -50,3 +50,14 @@ h2 {
   bottom: 0;
   background: linear-gradient(to bottom, rgb(26, 26, 26, 0.7), rgb(26, 26, 26));
 }
+
+.icon {
+  font-size: 18px;
+  color: $primary-color;
+  margin-top: 8px;
+  margin-right: 6px;
+}
+
+.mangaInfo {
+  flex: 1;
+}

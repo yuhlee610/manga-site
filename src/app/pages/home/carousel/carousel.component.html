@@ -1,4 +1,4 @@
-<nz-carousel nzEffect="scrollx" class="carousel" nzAutoPlay="true">
+<nz-carousel nzEffect="scrollx" class="carousel" nzAutoPlay="false">
   @for (manga of mangaList(); track manga.id) {
     <div nz-carousel-content class="featureCard">
       <img
@@ -17,13 +17,25 @@
           width="400"
           priority="true"
         />
-        <div>
+        <div class="mangaInfo">
           <h2 nz-typography>{{ manga.attributes.title['en'] }}</h2>
           <nz-flex nzWrap="wrap" nzGap="12">
             @for (tag of manga.attributes.tags; track tag.id) {
               <app-tag>{{ tag.attributes.name['en'] }}</app-tag>
             }
           </nz-flex>
+          <nz-space>
+            <div *nzSpaceItem>
+              <span nz-icon nzType="star" nzTheme="fill" class="icon"></span>
+              <span nz-typography>{{
+                statisticObj()?.[manga.id]?.rating?.average | number: '1.1-1'
+              }}</span>
+            </div>
+            <div *nzSpaceItem>
+              <span nz-icon nzType="bell" nzTheme="fill" class="icon"></span>
+              <span nz-typography>{{ statisticObj()?.[manga.id]?.follows }}</span>
+            </div>
+          </nz-space>
           <p class="description" nz-typography>{{ manga.attributes.description['en'] }}</p>
           <p class="updatedAt">{{ manga.attributes.updatedAt | updatedAt }}</p>
         </div>
