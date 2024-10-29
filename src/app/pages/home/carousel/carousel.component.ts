@@ -27,7 +27,7 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
     TagComponent,
     UpdatedAtPipe,
     DecimalPipe,
-    NzSpaceModule
+    NzSpaceModule,
   ],
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss',
@@ -35,6 +35,5 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
 })
 export class CarouselComponent {
   mangaList = input.required<Manga[]>();
-  statistics = input<Record<string, MangaStatistic>[]>();
-  statisticObj = computed(() => this.statistics()?.reduce((acc, val) => ({ ...acc, ...val }), {}));
+  statistics = input<Record<string, MangaStatistic>>();
 }

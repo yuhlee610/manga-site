@@ -28,12 +28,12 @@
             <div *nzSpaceItem>
               <span nz-icon nzType="star" nzTheme="fill" class="icon"></span>
               <span nz-typography>{{
-                statisticObj()?.[manga.id]?.rating?.average | number: '1.1-1'
+                statistics()?.[manga.id]?.rating?.average | number: '1.1-1'
               }}</span>
             </div>
             <div *nzSpaceItem>
               <span nz-icon nzType="bell" nzTheme="fill" class="icon"></span>
-              <span nz-typography>{{ statisticObj()?.[manga.id]?.follows }}</span>
+              <span nz-typography>{{ statistics()?.[manga.id]?.follows }}</span>
             </div>
           </nz-space>
           <p class="description" nz-typography>{{ manga.attributes.description['en'] }}</p>
