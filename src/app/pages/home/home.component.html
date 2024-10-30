@@ -1,7 +1,18 @@
 <div nz-row>
   <div nz-col nzSpan="16">
     <p class="heading" nz-typography>Truyện hot mới cập nhật</p>
-    <app-carousel [mangaList]="featureMangaList()" [statistics]="statistics()" />
+    <app-carousel [mangaList]="featureMangaList()" [statistics]="featureMangaListStatistics()" />
   </div>
-  <p nz-col nzOffset="2" nzSpan="6" class="heading" nz-typography>Xếp hạng</p>
+  <div nz-col nzOffset="2" nzSpan="6">
+    <p class="heading" nz-typography>Trending</p>
+    <nz-flex [nzVertical]="true" [nzJustify]="'space-between'" class="rank">
+      @for (manga of trendingMangaList(); track manga.id; let rank = $index) {
+        <app-rank-manga-card
+          [manga]="manga"
+          [statistic]="trendingMangaListStatistics()?.[manga.id]"
+          [rank]="rank + 1"
+        />
+      }
+    </nz-flex>
+  </div>
 </div>

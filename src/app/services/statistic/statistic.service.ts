@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { GetMangasStatisticResponse, Manga, MangaStatistic } from '../../models/mangadex';
 import { MangadexBaseUrl } from '../constants';
-import { forkJoin, map, Observable, reduce } from 'rxjs';
+import { forkJoin, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +18,11 @@ export class StatisticService {
     );
 
     return forkJoin(observables).pipe(
-      map((responses) => responses.map((response) => response.statistics)),
-      reduce((acc, val) => ({ ...acc, ...val }), {})
+      map((responses) =>
+        responses
+          .map((response) => response.statistics)
+          .reduce((acc, curr) => ({ ...acc, ...curr }), {})
+      )
     );
   }
 }

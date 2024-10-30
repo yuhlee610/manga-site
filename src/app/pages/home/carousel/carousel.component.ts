@@ -1,4 +1,4 @@
-import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, input } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, input } from '@angular/core';
 import { Manga, MangaStatistic } from '../../../models/mangadex';
 import { CoverArtPipe } from '../../../pipes/cover-art/cover-art.pipe';
 import { ImageAltPipe } from '../../../pipes/image-alt/image-alt.pipe';

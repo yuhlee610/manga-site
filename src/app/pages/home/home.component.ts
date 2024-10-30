@@ -10,6 +10,8 @@ import { map, switchMap } from 'rxjs';
 import { StatisticService } from '../../services/statistic/statistic.service';
 import { AsyncPipe } from '@angular/common';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { RankMangaCardComponent } from '../../components/rank-manga-card/rank-manga-card.component';
+import { NzFlexModule } from 'ng-zorro-antd/flex';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +22,8 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
     CarouselComponent,
     NzTypographyModule,
     AsyncPipe,
+    RankMangaCardComponent,
+    NzFlexModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -27,15 +31,23 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 export class HomeComponent {
   private activatedRoute = inject(ActivatedRoute);
   private statisticService = inject(StatisticService);
+  private mangaService = inject(MangaService);
   featureMangaList = toSignal(
     this.activatedRoute.data.pipe(map((data) => (data['featureMangaList'] as MangaList).data)),
     { initialValue: [] }
   );
-  statistics = toSignal(
+  featureMangaListStatistics = toSignal(
     toObservable(this.featureMangaList).pipe(
-      switchMap((mangaData) =>
-        this.statisticService.getStatisticsFromMangaList(mangaData as Manga[])
-      )
+      switchMap((mangaData) => this.statisticService.getStatisticsFromMangaList(mangaData))
+    )
+  );
+  trendingMangaList = toSignal(
+    this.mangaService.getTrendingMangaList().pipe(map((mangaList) => mangaList.data)),
+    { initialValue: [] }
+  );
+  trendingMangaListStatistics = toSignal(
+    toObservable(this.trendingMangaList).pipe(
+      switchMap((mangaData) => this.statisticService.getStatisticsFromMangaList(mangaData))
     )
   );
 }
