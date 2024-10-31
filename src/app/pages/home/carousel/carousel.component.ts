@@ -11,6 +11,8 @@ import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { TagComponent } from '../../../components/tag/tag.component';
 import { UpdatedAtPipe } from '../../../pipes/updated-at/updated-at.pipe';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { RouterLink } from '@angular/router';
+import { MangaTitlePipe } from '../../../pipes/manga-title/manga-title.pipe';
 
 @Component({
   selector: 'app-carousel',
@@ -28,6 +30,8 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
     UpdatedAtPipe,
     DecimalPipe,
     NzSpaceModule,
+    RouterLink,
+    MangaTitlePipe
   ],
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss',

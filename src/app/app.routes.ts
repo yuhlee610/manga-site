@@ -3,6 +3,7 @@ import { featureMangaListResolver, HomeComponent } from './pages/home/home.compo
 import { MyListComponent } from './pages/my-list/my-list.component';
 import { HistoryComponent } from './pages/history/history.component';
 import { PopularComponent } from './pages/popular/popular.component';
+import { MangaComponent } from './pages/manga/manga.component';
 
 export const routes: Routes = [
   {
@@ -23,5 +24,9 @@ export const routes: Routes = [
   {
     path: 'popular',
     component: PopularComponent,
+  },
+  {
+    path: 'manga/:mangaId',
+    component: MangaComponent,
   },
 ];

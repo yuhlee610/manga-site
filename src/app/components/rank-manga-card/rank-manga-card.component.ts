@@ -7,6 +7,7 @@ import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { MangaTitlePipe } from '../../pipes/manga-title/manga-title.pipe';
 
 @Component({
   selector: 'app-rank-manga-card',
@@ -20,6 +21,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzTypographyModule,
     NzSpaceModule,
     NzIconModule,
+    MangaTitlePipe
   ],
   templateUrl: './rank-manga-card.component.html',
   styleUrl: './rank-manga-card.component.scss',

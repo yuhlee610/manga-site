@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { MangaService } from '../../services/manga/manga.service';
 import { MangaList } from '../../models/mangadex';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { CarouselComponent } from './carousel/carousel.component';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
@@ -31,6 +31,7 @@ import { ChapterService } from '../../services/chapter/chapter.service';
     SpaceDirective,
     MangaCardComponent,
     NzSpaceModule,
+    RouterLink
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

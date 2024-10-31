@@ -1,9 +1,13 @@
 <div class="card" nz-flex [nzAlign]="'center'" [nzGap]="24">
   <h3 class="rankNumber" nz-typography>{{ rank() | number: '2.0' }}</h3>
-  <img [ngSrc]="manga() | coverArt" [alt]="manga() | imageAlt" height="90" width="60" />
+  <img
+    [ngSrc]="manga() | coverArt"
+    [alt]="manga() | imageAlt"
+    height="90"
+    width="60" />
   <div>
     <h3 nz-typography class="title">
-      {{ manga().attributes.title['en'] || manga().attributes.title['ja-ro'] }}
+      {{ manga() | mangaTitle }}
     </h3>
     <nz-space>
       <div *nzSpaceItem nz-flex [nzGap]="6">

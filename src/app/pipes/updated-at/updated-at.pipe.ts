@@ -6,7 +6,9 @@ import dayjs from 'dayjs';
   standalone: true,
 })
 export class UpdatedAtPipe implements PipeTransform {
-  transform(value: string): unknown {
+  transform(value?: string): unknown {
+    if (!value) return '';
+
     const minutes = dayjs().diff(value, 'm');
     if (minutes < 60) return `khoảng ${minutes} phút`;
 

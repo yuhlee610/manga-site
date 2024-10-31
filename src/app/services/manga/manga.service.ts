@@ -38,7 +38,7 @@ export class MangaService {
     return this.getMangaList({
       availableTranslatedLanguage: DefaultTranslatedLanguages,
       order: {
-        updatedAt: Order.DESC,
+        latestUploadedChapter: Order.DESC
       },
       includes: [Includes.COVER_ART],
       limit: 30,

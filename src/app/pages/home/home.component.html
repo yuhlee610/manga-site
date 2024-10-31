@@ -1,17 +1,20 @@
 <div class="row" nz-row>
   <div nz-col nzSpan="16">
     <p class="heading" nz-typography>Truyện hot mới cập nhật</p>
-    <app-carousel [mangaList]="featureMangaList()" [statistics]="featureMangaListStatistics()" />
+    <app-carousel
+      [mangaList]="featureMangaList()"
+      [statistics]="featureMangaListStatistics()" />
   </div>
   <div nz-col nzOffset="2" nzSpan="6">
     <p class="heading" nz-typography>Trending</p>
     <nz-flex [nzVertical]="true" [nzJustify]="'space-between'" class="rank">
       @for (manga of trendingMangaList(); track manga.id; let rank = $index) {
-        <app-rank-manga-card
-          [manga]="manga"
-          [statistic]="trendingMangaListStatistics()?.[manga.id]"
-          [rank]="rank + 1"
-        />
+        <a [routerLink]="['/manga', manga.id]">
+          <app-rank-manga-card
+            [manga]="manga"
+            [statistic]="trendingMangaListStatistics()?.[manga.id]"
+            [rank]="rank + 1" />
+        </a>
       }
     </nz-flex>
   </div>
@@ -24,8 +27,8 @@
     @for (manga of latestMangaList(); track manga.id) {
       <app-manga-card
         [manga]="manga"
-        [statistic]="latestMangaStatistics()?.[manga.id]"
-      ></app-manga-card>
+        [latestChapter]="latestChapters()?.[manga.attributes.latestUploadedChapter]"
+        [statistic]="latestMangaStatistics()?.[manga.id]"></app-manga-card>
     }
   </div>
 </div>
