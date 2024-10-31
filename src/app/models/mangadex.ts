@@ -1,4 +1,12 @@
-import { Includes, Links, MangaContentRating, MangaPublicationDemographic, MangaPublicationStatus, MangaReadingStatus, Order } from './static';
+import {
+  Includes,
+  Links,
+  MangaContentRating,
+  MangaPublicationDemographic,
+  MangaPublicationStatus,
+  MangaReadingStatus,
+  Order,
+} from './static';
 import { AuthenticationToken } from './auth';
 
 /*******************
@@ -6,7 +14,7 @@ import { AuthenticationToken } from './auth';
  *******************/
 
 /** Aggregate chapter type used in AggregateVolume for GetMangaIdAggregateResponse */
-export type AggregateChapter = {
+export interface AggregateChapter {
   chapter: string;
   /** UUID formatted string */
   id: string;
@@ -14,18 +22,18 @@ export type AggregateChapter = {
   others: string[];
   /** Total number of chapters across filtered languages */
   count: number;
-};
+}
 
 /** Aggregate volume type for GetMangaIdAggregateResponse */
-export type AggregateVolume = {
+export interface AggregateVolume {
   volume: string;
   /** Total number of chapters in volume across filtered languages */
   count: number;
   chapters: Record<string, AggregateChapter>;
-};
+}
 
 /** Order object for GetSearchMangaRequestOptions */
-export type GetSearchMangaOrder = {
+export interface GetSearchMangaOrder {
   title?: Order;
   year?: Order;
   createdAt?: Order;
@@ -34,24 +42,24 @@ export type GetSearchMangaOrder = {
   followedCount?: Order;
   relevance?: Order;
   rating?: Order;
-};
+}
 
 /** Order object for GetMangaIdFeedRequestOptions */
-export type GetMangaIdFeedOrder = {
+export interface GetMangaIdFeedOrder {
   createdAt?: Order;
   updatedAt?: Order;
   publishAt?: Order;
   readableAt?: Order;
   volume?: Order;
   chapter?: Order;
-};
+}
 
 /***********************
  * API REQUEST/RESPONSE
  ***********************/
 
 /** Request parameters for `GET /manga` */
-export type GetSearchMangaRequestOptions = {
+export interface GetSearchMangaRequestOptions {
   /** Default: 10 */
   limit?: number;
   offset?: number;
@@ -62,10 +70,10 @@ export type GetSearchMangaRequestOptions = {
   year?: number;
   includedTags?: string[];
   /** Default: AND */
-  includedTagsMode?: "AND" | "OR";
+  includedTagsMode?: 'AND' | 'OR';
   excludedTags?: string[];
   /** Default: OR */
-  excludedTagsMode?: "AND" | "OR";
+  excludedTagsMode?: 'AND' | 'OR';
   status?: MangaPublicationStatus[];
   /** ISO 639-1 standard two or five letter language code */
   originalLanguage?: string[];
@@ -88,16 +96,16 @@ export type GetSearchMangaRequestOptions = {
    * ``` */
   order?: GetSearchMangaOrder;
   includes?: Includes[];
-  hasAvailableChapters?: "0" | "1" | "true" | "false";
+  hasAvailableChapters?: '0' | '1' | 'true' | 'false';
   /** UUID formatted string */
   group?: string;
-};
+}
 
 /** Response from `GET /manga` */
 export type GetSearchMangaResponse = MangaList;
 
 /** Response from `GET /manga/status` */
-export type GetMangaStatusResponse = {
+export interface GetMangaStatusResponse {
   /** Default: "ok" */
   result: string;
   /**
@@ -115,10 +123,10 @@ export type GetMangaStatusResponse = {
    * ```
    */
   statuses: Record<string, MangaReadingStatus>;
-};
+}
 
 /** Request parameters for `GET /manga/{id}/feed` */
-export type GetMangaIdFeedRequestOptions = {
+export interface GetMangaIdFeedRequestOptions {
   /**
    * ```console
    * Default: 100
@@ -141,7 +149,7 @@ export type GetMangaIdFeedRequestOptions = {
   /** UUID formatted strings */
   excludedUploaders?: string[];
   /** Default: 1 */
-  includeFutureUpdates?: "0" | "1";
+  includeFutureUpdates?: '0' | '1';
   /** DateTime string with format YYYY-MM-DDTHH:mm:SS */
   createdAtSince?: string;
   /** DateTime string with format YYYY-MM-DDTHH:mm:SS */
@@ -150,53 +158,53 @@ export type GetMangaIdFeedRequestOptions = {
   publishAtSince?: string;
   order?: GetMangaIdFeedOrder;
   includes?: Includes[];
-};
+}
 
 /** Response from `GET /manga/{id}/feed` */
 export type GetMangaIdFeedResponse = ChapterList;
 
 /** Request parameters for `GET /manga/{id}/aggregate` */
-export type GetMangaIdAggregateRequestOptions = {
+export interface GetMangaIdAggregateRequestOptions {
   /** ISO 639-1 standard two or five letter language code */
   translatedLanguage?: string[];
   /** UUID formatted strings */
   groups?: string[];
-};
+}
 
 /** Response from `GET /manga/{id}/aggregate` */
-export type GetMangaIdAggregateResponse = {
+export interface GetMangaIdAggregateResponse {
   /** Default: "ok" */
   result: string;
   /** Object containing volumes and their respective chapters */
   volumes: Record<string, AggregateVolume>;
-};
+}
 
 /** Request parameters for `GET /manga/{id}` */
-export type GetMangaIdRequestOptions = {
+export interface GetMangaIdRequestOptions {
   includes?: Includes[];
-};
+}
 
 /** Response from `GET /manga/{id}` */
 export type GetMangaIdResponse = MangaResponse;
 
 /** Response from `GET /manga/{id}/read` */
-export type GetMangaIdReadMarkersResponse = {
-  result: "ok";
+export interface GetMangaIdReadMarkersResponse {
+  result: 'ok';
   /** UUID formatted strings */
   data: string[];
-};
+}
 
 /** Request parameters for `GET /manga/read` */
-export type GetMangaReadMarkersRequestOptions = {
+export interface GetMangaReadMarkersRequestOptions {
   /** UUID formatted strings */
   ids: string[];
   /** Group results by manga ID */
   grouped?: boolean;
-};
+}
 
 /** Response from `GET /manga/read` */
-export type GetMangaReadMarkersResponse = {
-  result: "ok";
+export interface GetMangaReadMarkersResponse {
+  result: 'ok';
   /**
    * Type is dependent on value passed into request options `grouped`
    *
@@ -219,13 +227,13 @@ export type GetMangaReadMarkersResponse = {
    * ```
    */
   data: string[] | Record<string, string>[];
-};
+}
 
 /** Request parameters for `GET /manga/random` */
-export type GetMangaRandomRequestOptions = {
+export interface GetMangaRandomRequestOptions {
   includes?: Includes[];
   contentRating?: MangaContentRating[];
-};
+}
 
 /** Response from `GET /manga/random` */
 export type GetMangaRandomResponse = MangaResponse;
@@ -271,7 +279,7 @@ export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclu
     [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
   }[Keys];
 
-export type MangaRequest = {
+export interface MangaRequest {
   title?: LocalizedString;
   altTitles?: LocalizedString[];
   description?: LocalizedString;
@@ -303,7 +311,7 @@ export type MangaRequest = {
    * Minimum: 1
    * ``` */
   version?: number;
-};
+}
 
 /**
  * The property name follows the pattern `^[a-z]{2,8}$`
@@ -317,21 +325,21 @@ export type MangaRequest = {
  */
 export type LocalizedString = Record<string, string>;
 
-export type MangaResponse = {
+export interface MangaResponse {
   result: 'ok' | 'error';
   /** Default: "entity" */
   response: string;
   data: Manga;
-};
+}
 
-export type ChapterResponse = {
+export interface ChapterResponse {
   result: 'ok' | 'error';
   /** Default: "entity" */
   response: string;
   data: Chapter;
-};
+}
 
-export type Relationship = {
+export interface Relationship {
   /** UUID formatted string */
   id: string;
   type: string;
@@ -354,39 +362,40 @@ export type Relationship = {
     | 'colored'
     | 'serialization';
   /** If Reference Expansion is applied, contains objects attributes */
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   attributes: any | null;
-};
+}
 
-export type Chapter = {
+export interface Chapter {
   /** UUID formatted string */
   id: string;
   type: 'chapter';
   attributes: ChapterAttributes;
   relationships: Relationship[];
-};
+}
 
-export type Manga = {
+export interface Manga {
   /** UUID formatted string */
   id: string;
   type: 'manga';
   attributes: MangaAttributes;
   relationships: Relationship[];
-};
+}
 
-export type ErrorResponse = {
+export interface ErrorResponse {
   /** Default: "error" */
   result: string;
   errors: Error[];
-};
+}
 
-export type Error = {
+export interface Error {
   id: string;
   status: number;
   title: string;
   detail: string;
-};
+}
 
-export type ChapterAttributes = {
+export interface ChapterAttributes {
   /** ```console
    * Maximum length: 255
    * ``` */
@@ -414,9 +423,9 @@ export type ChapterAttributes = {
   updatedAt: string;
   publishAt: string;
   readableAt: string;
-};
+}
 
-export type MangaAttributes = {
+export interface MangaAttributes {
   title: LocalizedString;
   altTitles: LocalizedString[];
   description: LocalizedString;
@@ -430,6 +439,7 @@ export type MangaAttributes = {
   year: number | null;
   contentRating: 'safe' | 'suggestive' | 'erotica' | 'pornographic';
   chapterNumbersResetOnNewVolume: boolean;
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   availableTranslatedLanguages: any[];
   /** UUID formatted string */
   latestUploadedChapter: string;
@@ -441,7 +451,7 @@ export type MangaAttributes = {
   version: number;
   createdAt: string;
   updatedAt: string;
-};
+}
 
 /**
  * Required properties:
@@ -473,9 +483,9 @@ export type MangaEdit = RequiredPick<MangaRequest, 'version'>;
  */
 export type ChapterEdit = RequiredPick<ChapterRequest, 'version'>;
 
-export type Response = {
+export interface Response {
   result: 'ok' | 'error';
-};
+}
 
 export type Login = RequireAtLeastOne<
   {
@@ -494,41 +504,41 @@ export type Login = RequireAtLeastOne<
   'username' | 'email'
 >;
 
-export type LoginResponse = {
+export interface LoginResponse {
   result: 'ok' | 'error';
   token: AuthenticationToken;
-};
+}
 
-export type CheckResponse = {
+export interface CheckResponse {
   /** Default: "ok" */
   result: string;
   isAuthenticated: boolean;
   roles: string[];
   permissions: string[];
-};
+}
 
-export type LogoutResponse = {
+export interface LogoutResponse {
   result: 'ok' | 'error';
-};
+}
 
-export type RefreshToken = {
+export interface RefreshToken {
   /** ```console
    * Minimum length: 1
    * ``` */
   token: string;
-};
+}
 
-export type RefreshResponse = {
+export interface RefreshResponse {
   result: 'ok' | 'error';
   token?: AuthenticationToken;
   message?: string;
-};
+}
 
-export type AccountActivateResponse = {
+export interface AccountActivateResponse {
   result: 'ok';
-};
+}
 
-export type CreateAccount = {
+export interface CreateAccount {
   /** ```console
    * Minimum length: 1
    * Maximum length: 64
@@ -540,24 +550,24 @@ export type CreateAccount = {
    * ``` */
   password: string;
   email: string;
-};
+}
 
-export type ScanlationGroupResponse = {
+export interface ScanlationGroupResponse {
   result: 'ok';
   /** Default: "entity" */
   response: string;
   data: ScanlationGroup;
-};
+}
 
-export type ScanlationGroup = {
+export interface ScanlationGroup {
   /** UUID formatted string */
   id: string;
   type: 'scanlation_group';
   attributes: ScanlationGroupAttributes;
   relationships: Relationship[];
-};
+}
 
-export type ScanlationGroupAttributes = {
+export interface ScanlationGroupAttributes {
   name: string;
   altNames: LocalizedString[];
   website: string | null;
@@ -590,26 +600,26 @@ export type ScanlationGroupAttributes = {
   version: number;
   createdAt: string;
   updatedAt: string;
-};
+}
 
-export type User = {
+export interface User {
   /** UUID formatted string */
   id: string;
   type: 'user';
   attributes: UserAttributes;
   relationships: Relationship[];
-};
+}
 
-export type UserAttributes = {
+export interface UserAttributes {
   username: string;
   roles: string[];
   /** ```console
    * Minimum: 1
    * ``` */
   version: number;
-};
+}
 
-export type CreateScanlationGroup = {
+export interface CreateScanlationGroup {
   name: string;
   website?: string | null;
   ircServer?: string | null;
@@ -627,9 +637,9 @@ export type CreateScanlationGroup = {
   inactive?: boolean;
   /** Pattern: `^P(([1-9]|[1-9][0-9])D)?(([1-9])W)?(T(([1-9]|1[0-9]|2[0-4])H)?(([1-9]|[1-5][0-9]|60)M)?(([1-9]|[1-5][0-9]|60)S)?)?$` */
   publishDelay?: string | null;
-};
+}
 
-export type ScanlationGroupEdit = {
+export interface ScanlationGroupEdit {
   name?: string;
   /** UUID formatted string */
   leader?: string;
@@ -657,9 +667,9 @@ export type ScanlationGroupEdit = {
    * Minimum: 1
    * ``` */
   version: number;
-};
+}
 
-export type CustomListCreate = {
+export interface CustomListCreate {
   name: string;
   visibility?: 'public' | 'private';
   /** UUID formatted strings */
@@ -668,9 +678,9 @@ export type CustomListCreate = {
    * Minimum: 1
    * ``` */
   version?: number;
-};
+}
 
-export type CustomListEdit = {
+export interface CustomListEdit {
   name?: string;
   visibility?: 'public' | 'private';
   /** UUID formatted strings */
@@ -679,48 +689,48 @@ export type CustomListEdit = {
    * Minimum: 1
    * ``` */
   version: number;
-};
+}
 
-export type CustomListResponse = {
+export interface CustomListResponse {
   result: 'ok' | 'error';
   /** Default: "entity" */
   response: string;
   data: CustomList;
-};
+}
 
-export type CustomList = {
+export interface CustomList {
   /** UUID formatted string */
   id: string;
   type: 'custom_list';
   attributes: CustomListAttributes;
   relationships: Relationship[];
-};
+}
 
-export type CustomListAttributes = {
+export interface CustomListAttributes {
   name: string;
   visibility: 'public' | 'private';
   /** ```console
    * Minimum: 1
    * ``` */
   version: number;
-};
+}
 
-export type CoverResponse = {
+export interface CoverResponse {
   result: string;
   /** Default: "entity" */
   response: string;
   data: Cover;
-};
+}
 
-export type Cover = {
+export interface Cover {
   /** UUID formatted string */
   id: string;
   type: 'cover_art';
   attributes: CoverAttributes;
   relationships: Relationship[];
-};
+}
 
-export type CoverAttributes = {
+export interface CoverAttributes {
   volume: string | null;
   fileName: string;
   description: string | null;
@@ -731,9 +741,9 @@ export type CoverAttributes = {
   version: number;
   createdAt: string;
   updatedAt: string;
-};
+}
 
-export type CoverEdit = {
+export interface CoverEdit {
   /** ```console
    * Minimum length: 0
    * Maximum length: 8
@@ -750,24 +760,24 @@ export type CoverEdit = {
    * Minimum: 1
    * ``` */
   version: number;
-};
+}
 
-export type AuthorResponse = {
+export interface AuthorResponse {
   result: string;
   /** Default: "entity" */
   response: string;
   data: Author;
-};
+}
 
-export type Author = {
+export interface Author {
   /** UUID formatted string */
   id: string;
   type: 'author';
   attributes: AuthorAttributes;
   relationships: Relationship[];
-};
+}
 
-export type AuthorAttributes = {
+export interface AuthorAttributes {
   name: string;
   imageUrl: string;
   biography: LocalizedString;
@@ -803,7 +813,7 @@ export type AuthorAttributes = {
   version: number;
   createdAt: string;
   updatedAt: string;
-};
+}
 
 /**
  * Required properties:
@@ -827,12 +837,12 @@ export type AuthorCreate = RequiredPick<
   'name'
 >;
 
-export type MappingIdBody = {
+export interface MappingIdBody {
   type: 'group' | 'manga' | 'chapter' | 'tag';
   ids: number[];
-};
+}
 
-export type MappingIdResponse = {
+export interface MappingIdResponse {
   /** Default: "ok" */
   result: string;
   /** Default: "collection" */
@@ -841,24 +851,24 @@ export type MappingIdResponse = {
   limit: number;
   offset: number;
   total: number;
-};
+}
 
-export type MappingId = {
+export interface MappingId {
   /** UUID formatted string */
   id: string;
   type: 'mapping_id';
   attributes: MappingIdAttributes;
   relationships: Relationship[];
-};
+}
 
-export type MappingIdAttributes = {
+export interface MappingIdAttributes {
   type: 'manga' | 'chapter' | 'group' | 'tag';
   legacyId: number;
   /** UUID formatted string */
   newId: string;
-};
+}
 
-export type TagResponse = {
+export interface TagResponse {
   /** Default: "ok" */
   result: string;
   /** Default: "collection" */
@@ -867,17 +877,17 @@ export type TagResponse = {
   limit: number;
   offset: number;
   total: number;
-};
+}
 
-export type Tag = {
+export interface Tag {
   /** UUID formatted string */
   id: string;
   type: 'tag';
   attributes: TagAttributes;
   relationships: Relationship[];
-};
+}
 
-export type TagAttributes = {
+export interface TagAttributes {
   name: LocalizedString;
   description: LocalizedString;
   group: 'content' | 'format' | 'genre' | 'theme';
@@ -885,20 +895,20 @@ export type TagAttributes = {
    * Minimum: 1
    * ``` */
   version: number;
-};
+}
 
-export type UserResponse = {
+export interface UserResponse {
   result: 'ok';
   /** Default: "entity" */
   response: string;
   data: User;
-};
+}
 
-export type SendAccountActivationCode = {
+export interface SendAccountActivationCode {
   email: string;
-};
+}
 
-export type RecoverCompleteBody = {
+export interface RecoverCompleteBody {
   /**
    * ```console
    * Minimum length: 8
@@ -906,13 +916,13 @@ export type RecoverCompleteBody = {
    * ```
    */
   newPassword: string;
-};
+}
 
-export type UpdateMangaStatus = {
+export interface UpdateMangaStatus {
   status: 'reading' | 'on_hold' | 'plan_to_read' | 'dropped' | 're_reading' | 'completed' | null;
-};
+}
 
-export type ChapterRequest = {
+export interface ChapterRequest {
   /**
    * ```console
    * Maximum length: 255
@@ -941,9 +951,9 @@ export type ChapterRequest = {
    * Minimum: 1
    * ``` */
   version?: number;
-};
+}
 
-export type CoverList = {
+export interface CoverList {
   /** Default: "ok" */
   result: string;
   /** Default: "collection" */
@@ -952,9 +962,9 @@ export type CoverList = {
   limit: number;
   offset: number;
   total: number;
-};
+}
 
-export type AuthorList = {
+export interface AuthorList {
   /** Default: "ok" */
   result: string;
   /** Default: "collection" */
@@ -963,9 +973,9 @@ export type AuthorList = {
   limit: number;
   offset: number;
   total: number;
-};
+}
 
-export type ChapterList = {
+export interface ChapterList {
   /** Default: "ok" */
   result: string;
   /** Default: "collection" */
@@ -974,9 +984,9 @@ export type ChapterList = {
   limit: number;
   offset: number;
   total: number;
-};
+}
 
-export type ScanlationGroupList = {
+export interface ScanlationGroupList {
   /** Default: "ok" */
   result: string;
   /** Default: "collection" */
@@ -985,11 +995,11 @@ export type ScanlationGroupList = {
   limit: number;
   offset: number;
   total: number;
-};
+}
 
 export type MangaRelationCreate = RequiredPick<MangaRelationRequest, 'targetManga' | 'relation'>;
 
-export type MangaRelationRequest = {
+export interface MangaRelationRequest {
   /** UUID formatted string */
   targetManga?: string;
   relation?:
@@ -1009,9 +1019,9 @@ export type MangaRelationRequest = {
     | 'preserialization'
     | 'colored'
     | 'serialization';
-};
+}
 
-export type MangaRelationList = {
+export interface MangaRelationList {
   /** Default: "ok" */
   result: string;
   /** Default: "collection" */
@@ -1020,24 +1030,24 @@ export type MangaRelationList = {
   limit: number;
   offset: number;
   total: number;
-};
+}
 
-export type MangaRelationResponse = {
+export interface MangaRelationResponse {
   result: 'ok' | 'error';
   /** Default: "entity" */
   response: string;
   data: MangaRelation;
-};
+}
 
-export type MangaRelation = {
+export interface MangaRelation {
   /** UUID formatted string */
   id: string;
   type: 'manga_relation';
   attributes: MangaRelationAttributes;
   relationships: Relationship[];
-};
+}
 
-export type MangaRelationAttributes = {
+export interface MangaRelationAttributes {
   relation:
     | 'monochrome'
     | 'main_story'
@@ -1059,9 +1069,9 @@ export type MangaRelationAttributes = {
    * Minimum: 1
    * ``` */
   version: number;
-};
+}
 
-export type MangaList = {
+export interface MangaList {
   /** Default: "ok" */
   result: string;
   /** Default: "collection" */
@@ -1070,9 +1080,9 @@ export type MangaList = {
   limit: number;
   offset: number;
   total: number;
-};
+}
 
-export type CustomListList = {
+export interface CustomListList {
   /** Default: "ok" */
   result: string;
   /** Default: "collection" */
@@ -1081,9 +1091,9 @@ export type CustomListList = {
   limit: number;
   offset: number;
   total: number;
-};
+}
 
-export type UserList = {
+export interface UserList {
   /** Default: "ok" */
   result: string;
   /** Default: "collection" */
@@ -1092,16 +1102,16 @@ export type UserList = {
   limit: number;
   offset: number;
   total: number;
-};
+}
 
-export type UploadSession = {
+export interface UploadSession {
   /** UUID formatted string */
   id: string;
   type: 'upload_session';
   attributes: UploadSessionAttributes;
-};
+}
 
-export type UploadSessionAttributes = {
+export interface UploadSessionAttributes {
   isCommitted: boolean;
   isProcessed: boolean;
   isDeleted: boolean;
@@ -1111,16 +1121,16 @@ export type UploadSessionAttributes = {
   version: number;
   createdAt: string;
   updatedAt: string;
-};
+}
 
-export type UploadSessionFile = {
+export interface UploadSessionFile {
   /** UUID formatted string */
   id: string;
   type: 'upload_session_file';
   attributes: UploadSessionFileAttributes;
-};
+}
 
-export type UploadSessionFileAttributes = {
+export interface UploadSessionFileAttributes {
   originalFileName: string;
   fileHash: string;
   fileSize: number;
@@ -1130,7 +1140,7 @@ export type UploadSessionFileAttributes = {
    * Minimum: 1
    * ``` */
   version: number;
-};
+}
 
 /** NOTE: At least one property is required to be present */
 export type ChapterReadMarkerBatch = RequireAtLeastOne<
@@ -1143,7 +1153,7 @@ export type ChapterReadMarkerBatch = RequireAtLeastOne<
   'chapterIdsRead' | 'chapterIdsUnread'
 >;
 
-export type BeginUploadSession = {
+export interface BeginUploadSession {
   /**
    * UUID formatted strings
    *
@@ -1159,16 +1169,16 @@ export type BeginUploadSession = {
    * Must be 36 characters
    */
   manga: string[];
-};
+}
 
-export type BeginEditSession = {
+export interface BeginEditSession {
   /** ```console
    * Minimum: 1
    * ``` */
   version: number;
-};
+}
 
-export type CommitUploadSession = {
+export interface CommitUploadSession {
   chapterDraft: ChapterDraft;
   /**
    * UUID formatted strings
@@ -1180,9 +1190,9 @@ export type CommitUploadSession = {
    * ```
    */
   pageOrder: string[];
-};
+}
 
-export type ChapterDraft = {
+export interface ChapterDraft {
   /**
    * Pattern: ^((0|[1-9]\d*)(\.\d+)?[a-z]?)?$
    *
@@ -1215,9 +1225,9 @@ export type ChapterDraft = {
   externalUrl?: string | null;
   /** Pattern: ^\d{4}-[0-1]\d-([0-2]\d|3[0-1])T([0-1]\d|2[0-3]):[0-5]\d:[0-5]\d$ */
   publishAt?: string;
-};
+}
 
-export type ReportListResponse = {
+export interface ReportListResponse {
   result: 'ok' | 'error';
   /** Default: "collection" */
   response: string;
@@ -1225,24 +1235,24 @@ export type ReportListResponse = {
   limit: number;
   offset: number;
   total: number;
-};
+}
 
-export type Report = {
+export interface Report {
   /** UUID formatted string */
   id: string;
   type: 'report';
   attributes: ReportAttributes;
   relationships: Relationship[];
-};
+}
 
-export type ReportAttributes = {
+export interface ReportAttributes {
   details: string;
   objectId: string;
   status: 'waiting' | 'accepted' | 'refused' | 'autoresolved';
   createdAt: string;
-};
+}
 
-export type ForumsThreadResponse = {
+export interface ForumsThreadResponse {
   /** Default: "ok" */
   result: string;
   /** Default: "entity" */
@@ -1257,7 +1267,7 @@ export type ForumsThreadResponse = {
       repliesCount: number;
     };
   };
-};
+}
 
 /** Reference expansion options for author/artist entities or lists */
 export type ReferenceExpansionAuthor = 'manga'[];
@@ -1301,19 +1311,19 @@ export type StatisticsDetailsComments = {
   repliesCount: number;
 } | null;
 
-export type MangaStatistic = {
+export interface MangaStatistic {
   comments: StatisticsDetailsComments;
   rating: {
     average: number;
     bayesian: number;
   };
   follows: number;
-};
+}
 
-export type GetMangasStatisticResponse = {
+export interface GetMangasStatisticResponse {
   result: string;
   statistics: Record<string, MangaStatistic>;
-};
+}
 
 export type ExtendChapter = Chapter & {
   manga?: Partial<Manga> & Pick<Manga, 'id' | 'type'>;
@@ -1326,9 +1336,9 @@ export type ExtendManga = Manga & {
   artist?: Partial<Author> & Pick<Author, 'id' | 'type'>;
 };
 
-export type ChapterItem = {
+export interface ChapterItem {
   volume: string;
   chapter: string;
   id: string;
   others?: string[];
-};
+}

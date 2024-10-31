@@ -91,7 +91,7 @@ export enum Includes {
  *******************/
 
 /** Links object for manga object */
-export type Links = {
+export interface Links {
   /**
    * anilist
    * ```console
@@ -161,4 +161,4 @@ export type Links = {
   raw: string;
   /** Stored as full URL, official english licenced URL */
   engtl: string;
-};
+}

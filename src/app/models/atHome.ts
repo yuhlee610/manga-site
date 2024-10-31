@@ -3,7 +3,7 @@
  ***********************/
 
 /** Request parameters for `GET /at-home/server/{chapterId}` */
-export type GetAtHomeServerChapterIdRequestOptions = {
+export interface GetAtHomeServerChapterIdRequestOptions {
   /**
    * Force selecting from MangaDex@Home servers that use the standard HTTPS port 443.
    *
@@ -17,10 +17,10 @@ export type GetAtHomeServerChapterIdRequestOptions = {
    * Default: false
    */
   forcePort443?: boolean;
-};
+}
 
 /** Response from `GET /at-home/server/{chapterId}` */
-export type GetAtHomeServerChapterIdResponse = {
+export interface GetAtHomeServerChapterIdResponse {
   /** Default: "ok" */
   result: string;
   /**
@@ -35,4 +35,4 @@ export type GetAtHomeServerChapterIdResponse = {
     data: string[];
     dataSaver: string[];
   };
-};
+}

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { MangaService } from '../../services/manga/manga.service';
-import { Manga, MangaList } from '../../models/mangadex';
+import { MangaList } from '../../models/mangadex';
 import { ActivatedRoute } from '@angular/router';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { CarouselComponent } from './carousel/carousel.component';

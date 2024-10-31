@@ -2,25 +2,25 @@
  * TYPE DEFINITIONS
  *******************/
 
-import { ChapterEdit, ChapterList, ChapterResponse, ReferenceExpansionChapter } from "./mangadex";
-import { MangaContentRating, Order } from "./static";
+import { ChapterEdit, ChapterList, ChapterResponse, ReferenceExpansionChapter } from './mangadex';
+import { MangaContentRating, Order } from './static';
 
 /** Order object for GetChapterRequestOptions */
-export type GetChapterOrder = {
+export interface GetChapterOrder {
   createdAt?: Order;
   updatedAt?: Order;
   publishAt?: Order;
   readableAt?: Order;
   volume?: Order;
   chapter?: Order;
-};
+}
 
 /***********************
  * API REQUEST/RESPONSE
  ***********************/
 
 /** Request parameters for `GET /chapter` */
-export type GetChapterRequestOptions = {
+export interface GetChapterRequestOptions {
   /**
    * ```console
    * Default: 10
@@ -65,15 +65,15 @@ export type GetChapterRequestOptions = {
   publishAtSince?: string;
   order?: GetChapterOrder;
   includes?: ReferenceExpansionChapter;
-};
+}
 
 /** Response from `GET /chapter` */
 export type GetChapterResponse = ChapterList;
 
 /** Request parameters for `GET /chapter/{id}` */
-export type GetChapterIdRequestOptions = {
+export interface GetChapterIdRequestOptions {
   includes?: ReferenceExpansionChapter;
-};
+}
 
 /** Response from `GET /chapter/{id}` */
 export type GetChapterIdResponse = ChapterResponse;

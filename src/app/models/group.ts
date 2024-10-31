@@ -2,24 +2,24 @@
  * TYPE DEFINITIONS
  *******************/
 
-import { ScanlationGroupList, ScanlationGroupResponse } from "./mangadex";
-import { Includes, Order } from "./static";
+import { ScanlationGroupList, ScanlationGroupResponse } from './mangadex';
+import { Includes, Order } from './static';
 
 /** Order object for GetSearchGroupRequestOptions */
-export type GetSearchGroupOrder = {
+export interface GetSearchGroupOrder {
   name?: Order;
   createdAt?: Order;
   updatedAt?: Order;
   followedCount?: Order;
   relevance?: Order;
-};
+}
 
 /***********************
  * API REQUEST/RESPONSE
  ***********************/
 
 /** Request parameters for `GET /group` */
-export type GetSearchGroupRequestOptions = {
+export interface GetSearchGroupRequestOptions {
   /**
    * ```console
    * Default: 10
@@ -41,15 +41,15 @@ export type GetSearchGroupRequestOptions = {
    * Seems to be a typo? Comes directly from their documentation.
    */
   order?: GetSearchGroupOrder;
-};
+}
 
 /** Response from `GET /group` */
 export type GetSearchGroupResponse = ScanlationGroupList;
 
 /** Request parameters for `GET /group/{id}` */
-export type GetGroupIdRequestOptions = {
+export interface GetGroupIdRequestOptions {
   includes?: Includes[];
-};
+}
 
 /** Response from `GET /group/{id}` */
 export type GetGroupIdResponse = ScanlationGroupResponse;

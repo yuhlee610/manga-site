@@ -2,30 +2,30 @@
  * TYPE DEFINITIONS
  *******************/
 
-import { ChapterList, MangaList, UserList, UserResponse } from "./mangadex";
-import { Includes, MangaContentRating, Order } from "./static";
+import { ChapterList, MangaList, UserList, UserResponse } from './mangadex';
+import { Includes, MangaContentRating, Order } from './static';
 
 /** Order object for GetUsersRequestOptions */
-export type GetUsersOrder = {
+export interface GetUsersOrder {
   username?: Order;
-};
+}
 
 /** Order object for GetUserFollowedMangaFeedRequestOptions */
-export type GetUserFollowedMangaFeedOrder = {
+export interface GetUserFollowedMangaFeedOrder {
   createdAt: Order;
   updatedAt: Order;
   publishAt: Order;
   readableAt: Order;
   volume: Order;
   chapter: Order;
-};
+}
 
 /***********************
  * API REQUEST/RESPONSE
  ***********************/
 
 /** Request parameters for `GET /user` */
-export type GetUsersRequestOptions = {
+export interface GetUsersRequestOptions {
   /**
    * ```console
    * Default: 10
@@ -39,7 +39,7 @@ export type GetUsersRequestOptions = {
   ids?: string[];
   username?: string;
   order?: GetUsersOrder;
-};
+}
 
 /** Response from `GET /user` */
 export type GetUsersResponse = UserList;
@@ -48,7 +48,7 @@ export type GetUsersResponse = UserList;
 export type GetUserIdResponse = UserResponse;
 
 /** Request parameters for `GET /user/follows/manga/feed` */
-export type GetUserFollowedMangaFeedRequestOptions = {
+export interface GetUserFollowedMangaFeedRequestOptions {
   /**
    * ```console
    * Default: 100
@@ -78,13 +78,13 @@ export type GetUserFollowedMangaFeedRequestOptions = {
   publishAtSince?: string;
   order?: GetUserFollowedMangaFeedOrder;
   includes?: Includes[];
-};
+}
 
 /** Response from `GET /user/follows/manga/feed` */
 export type GetUserFollowedMangaFeedResponse = ChapterList;
 
 /** Request parameters for `GET /user/follows/manga` */
-export type GetUserFollowedMangaRequestOptions = {
+export interface GetUserFollowedMangaRequestOptions {
   /** ```console
    * Default: 10
    * Minimum: 1
@@ -94,7 +94,7 @@ export type GetUserFollowedMangaRequestOptions = {
   /** Minimum: 0 */
   offset?: number;
   includes?: Includes[];
-};
+}
 
 /** Response from `GET /user/follows/manga` */
 export type GetUserFollowedMangaResponse = MangaList;

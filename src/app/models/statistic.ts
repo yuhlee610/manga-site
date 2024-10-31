@@ -1,3 +1,3 @@
-export type GetMangasStatisticRequestOptions = {
+export interface GetMangasStatisticRequestOptions {
   manga: string[];
-};
+}

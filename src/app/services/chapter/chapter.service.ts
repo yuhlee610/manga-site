@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Chapter, Manga } from '../../models/mangadex';
+import { Manga } from '../../models/mangadex';
 import { MangadexBaseUrl } from '../constants';
 import { buildQueryStringFromOptions } from '../utils';
 import { map } from 'rxjs';

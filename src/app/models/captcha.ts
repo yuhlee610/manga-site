@@ -3,6 +3,6 @@
  ***********************/
 
 /** Response from `POST /captcha/solve` */
-export type PostCaptchaSolveResponse = {
+export interface PostCaptchaSolveResponse {
   result: 'ok' | 'error';
-};
+}

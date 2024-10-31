@@ -11,9 +11,9 @@ import {
 } from './mangadex';
 
 /** Response from `GET /account/available` */
-export type GetAccountAvailableResponse = {
+export interface GetAccountAvailableResponse {
   available: boolean;
-};
+}
 
 /** Request options for `POST /account/create` */
 export type PostAccountCreateRequestOptions = CreateAccount;

@@ -34,7 +34,8 @@ const transformArrayForQueryString = function (name: string, array?: string[]) {
  * @param {object} [options] A request options object to parse
  * @returns {string} The query string, including the starting '?' character
  */
-export const buildQueryStringFromOptions = function (options?: { [key: string]: any }) {
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+export const buildQueryStringFromOptions = function (options?: Record<string, any>) {
   const queryParams = [];
 
   if (options === undefined || Object.keys(options).length === 0) {

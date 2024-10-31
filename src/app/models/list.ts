@@ -2,20 +2,20 @@
  * TYPE DEFINITIONS
  *******************/
 
-import { ChapterList, CustomListList, CustomListResponse } from "./mangadex";
-import { Includes, MangaContentRating, Order } from "./static";
+import { ChapterList, CustomListList, CustomListResponse } from './mangadex';
+import { Includes, MangaContentRating, Order } from './static';
 
 // Kenjugs (06/24/2022) TODO: This type is identical to GetUserFollowedMangaFeedOrder.
 // These should be consolidated into a base type.
 /** Order object for GetListIdFeedRequestOptions */
-export type GetListIdFeedOrder = {
+export interface GetListIdFeedOrder {
   createdAt: Order;
   updatedAt: Order;
   publishAt: Order;
   readableAt: Order;
   volume: Order;
   chapter: Order;
-};
+}
 
 /***********************
  * API REQUEST/RESPONSE
@@ -25,7 +25,7 @@ export type GetListIdFeedOrder = {
 export type GetListIdResponse = CustomListResponse;
 
 /** Request parameters for `GET /user/list` */
-export type GetUserListRequestOptions = {
+export interface GetUserListRequestOptions {
   /**
    * ```console
    * Default: 10
@@ -35,7 +35,7 @@ export type GetUserListRequestOptions = {
    */
   limit?: number;
   offset?: number;
-};
+}
 
 /** Response from `GET /user/list` */
 export type GetUserListResponse = CustomListList;
@@ -49,7 +49,7 @@ export type GetUserIdListResponse = GetUserListResponse;
 /** Request parameters for `GET /list/{id}/feed` */
 // Kenjugs (06/24/2022) TODO: This type is identical to GetUserFollowedMangaFeedRequestOptions.
 // These should be consolidated into a base type.
-export type GetListIdFeedRequestOptions = {
+export interface GetListIdFeedRequestOptions {
   /**
    * ```console
    * Default: 100
@@ -79,7 +79,7 @@ export type GetListIdFeedRequestOptions = {
   publishAtSince?: string;
   order?: GetListIdFeedOrder;
   includes?: Includes[];
-};
+}
 
 /** Response from `GET /list/{id}/feed` */
 export type GetListIdFeedResponse = ChapterList;

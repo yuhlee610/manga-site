@@ -2,20 +2,26 @@
  * TYPE DEFINITIONS
  *******************/
 
-import { AuthorCreate, AuthorEdit, AuthorList, AuthorResponse, ReferenceExpansionAuthor } from "./mangadex";
-import { Order } from "./static";
+import {
+  AuthorCreate,
+  AuthorEdit,
+  AuthorList,
+  AuthorResponse,
+  ReferenceExpansionAuthor,
+} from './mangadex';
+import { Order } from './static';
 
 /** Order object for GetAuthorRequestOptions */
-export type GetAuthorOrder = {
+export interface GetAuthorOrder {
   name?: Order;
-};
+}
 
 /***********************
  * API REQUEST/RESPONSE
  ***********************/
 
 /** Request parameters for `GET /author` */
-export type GetAuthorRequestOptions = {
+export interface GetAuthorRequestOptions {
   /** ```console
    * Default: 10
    * Minimum: 0
@@ -35,15 +41,15 @@ export type GetAuthorRequestOptions = {
   name?: string;
   order?: GetAuthorOrder;
   includes?: ReferenceExpansionAuthor;
-};
+}
 
 /** Response from `GET /author` */
 export type GetAuthorResponse = AuthorList;
 
 /** Request parameters for `GET /author/{id}` */
-export type GetAuthorIdRequestOptions = {
+export interface GetAuthorIdRequestOptions {
   includes?: ReferenceExpansionAuthor;
-};
+}
 
 /** Request parameters for `POST /author` */
 export type PostAuthorRequestOptions = AuthorCreate;

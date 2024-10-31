@@ -2,22 +2,22 @@
  * TYPE DEFINITIONS
  *******************/
 
-import { CoverEdit, CoverList, CoverResponse, ReferenceExpansionCoverArt } from "./mangadex";
-import { Order } from "./static";
+import { CoverEdit, CoverList, CoverResponse, ReferenceExpansionCoverArt } from './mangadex';
+import { Order } from './static';
 
 /** Order object for GetCoverRequestOptions */
-export type GetCoverOrder = {
+export interface GetCoverOrder {
   createdAt: Order;
   updatedAt: Order;
   volume: Order;
-};
+}
 
 /***********************
  * API REQUEST/RESPONSE
  ***********************/
 
 /** Request parameters for `GET /cover` */
-export type GetCoverRequestOptions = {
+export interface GetCoverRequestOptions {
   /** ```console
    * Default: 10
    * Minimum: 0
@@ -54,15 +54,15 @@ export type GetCoverRequestOptions = {
   locales?: string[];
   order?: GetCoverOrder;
   includes?: ReferenceExpansionCoverArt;
-};
+}
 
 /** Response from `GET /cover` */
 export type GetCoverResponse = CoverList;
 
 /** Request parameters for `GET /cover/{mangaOrCoverId}` */
-export type GetCoverIdRequestOptions = {
+export interface GetCoverIdRequestOptions {
   includes?: ReferenceExpansionCoverArt;
-};
+}
 
 /** Response from `GET /cover/{mangaOrCoverId}` */
 export type GetCoverIdResponse = CoverResponse;

@@ -8,9 +8,8 @@ describe('RankMangaCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RankMangaCardComponent]
-    })
-    .compileComponents();
+      imports: [RankMangaCardComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RankMangaCardComponent);
     component = fixture.componentInstance;
