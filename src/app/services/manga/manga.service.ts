@@ -1,9 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { DefaultTranslatedLanguages, MangadexBaseUrl } from '../constants';
-import { GetSearchMangaRequestOptions, GetSearchMangaResponse } from '../../models/mangadex';
+import {
+  GetMangaIdRequestOptions,
+  GetMangaIdResponse,
+  GetSearchMangaRequestOptions,
+  GetSearchMangaResponse,
+} from '../../models/mangadex';
 import { Includes, Order } from '../../models/static';
 import { buildQueryStringFromOptions } from '../utils';
+import { map, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -38,15 +44,28 @@ export class MangaService {
     return this.getMangaList({
       availableTranslatedLanguage: DefaultTranslatedLanguages,
       order: {
-        latestUploadedChapter: Order.DESC
+        latestUploadedChapter: Order.DESC,
       },
       includes: [Includes.COVER_ART],
       limit: 30,
     });
   }
 
+  getManga(id: string) {
+    return this.getMangaById(id).pipe(map(response => response.data));
+  }
+
   private getMangaList(queryParams: GetSearchMangaRequestOptions) {
     const qs = buildQueryStringFromOptions(queryParams);
-    return this.httpClient.get<GetSearchMangaResponse>(`${MangadexBaseUrl}/manga${qs}`);
+    return this.httpClient.get<GetSearchMangaResponse>(
+      `${MangadexBaseUrl}/manga${qs}`
+    );
+  }
+
+  private getMangaById(id: string, queryParams?: GetMangaIdRequestOptions) {
+    const qs = buildQueryStringFromOptions(queryParams);
+    return this.httpClient.get<GetMangaIdResponse>(
+      `${MangadexBaseUrl}/manga/${id}${qs}`
+    );
   }
 }
