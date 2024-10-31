@@ -34,7 +34,18 @@ export class MangaService {
     });
   }
 
-  getMangaList(queryParams: GetSearchMangaRequestOptions) {
+  getLatestMangaList() {
+    return this.getMangaList({
+      availableTranslatedLanguage: DefaultTranslatedLanguages,
+      order: {
+        updatedAt: Order.DESC,
+      },
+      includes: [Includes.COVER_ART],
+      limit: 30,
+    });
+  }
+
+  private getMangaList(queryParams: GetSearchMangaRequestOptions) {
     const qs = buildQueryStringFromOptions(queryParams);
     return this.httpClient.get<GetSearchMangaResponse>(`${MangadexBaseUrl}/manga${qs}`);
   }

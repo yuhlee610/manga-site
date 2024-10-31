@@ -1,5 +1,10 @@
 @import '../../../variables.scss';
 
+.row {
+  max-width: 2000px;
+  margin: auto;
+}
+
 .heading {
   font-size: 20px;
   color: $primary-color;
@@ -10,4 +15,10 @@
   background-color: #1A1A1A;
   height: 612px;
   padding: 24px 0;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 24px 36px;
 }

@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { GetMangasStatisticResponse, Manga, MangaStatistic } from '../../models/mangadex';
 import { MangadexBaseUrl } from '../constants';
 import { forkJoin, map, Observable } from 'rxjs';
+import { buildQueryStringFromOptions } from '../utils';
 
 @Injectable({
   providedIn: 'root',
@@ -10,19 +11,12 @@ import { forkJoin, map, Observable } from 'rxjs';
 export class StatisticService {
   private httpClient = inject(HttpClient);
 
-  getStatisticsFromMangaList(mangaList: Manga[]): Observable<Record<string, MangaStatistic>> {
-    const observables = mangaList.map((manga) =>
-      this.httpClient.get<GetMangasStatisticResponse>(
-        `${MangadexBaseUrl}/statistics/manga/${manga.id}`
-      )
-    );
+  findStatisticsFromMangaList(mangaList: Manga[]) {
+    const mangaIds = mangaList.map((manga) => manga.id);
+    const qs = buildQueryStringFromOptions({ manga: mangaIds });
 
-    return forkJoin(observables).pipe(
-      map((responses) =>
-        responses
-          .map((response) => response.statistics)
-          .reduce((acc, curr) => ({ ...acc, ...curr }), {})
-      )
-    );
+    return this.httpClient
+      .get<GetMangasStatisticResponse>(`${MangadexBaseUrl}/statistics/manga${qs}`)
+      .pipe(map((response) => response.statistics));
   }
 }

@@ -1,4 +1,4 @@
-<div nz-row>
+<div class="row" nz-row>
   <div nz-col nzSpan="16">
     <p class="heading" nz-typography>Truyện hot mới cập nhật</p>
     <app-carousel [mangaList]="featureMangaList()" [statistics]="featureMangaListStatistics()" />
@@ -14,5 +14,15 @@
         />
       }
     </nz-flex>
+  </div>
+</div>
+
+<div [appSpace]="36"></div>
+<div class="row">
+  <p class="heading" nz-typography>Truyện mới cập nhật</p>
+  <div class="cards">
+    @for (manga of latestMangaList(); track manga.id) {
+      <app-manga-card [manga]="manga" [statistic]="latestMangaStatistics()?.[manga.id]"></app-manga-card>
+    }
   </div>
 </div>
