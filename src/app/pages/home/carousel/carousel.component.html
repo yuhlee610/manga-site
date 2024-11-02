@@ -22,7 +22,7 @@
           <a [routerLink]="['/manga', manga.id]">
             <h2 nz-typography>{{ manga | mangaTitle }}</h2>
           </a>
-          <nz-flex nzWrap="wrap" nzGap="12">
+          <nz-flex nzWrap="wrap">
             @for (tag of manga.attributes.tags; track tag.id) {
               <app-tag>{{ tag.attributes.name['en'] }}</app-tag>
             }

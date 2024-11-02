@@ -8,6 +8,6 @@ import { Manga } from '../../models/mangadex';
 export class ImageAltPipe implements PipeTransform {
   transform(manga: Manga, lang = 'en') {
     const alt = manga.attributes.altTitles.find((altTitle) => altTitle[lang]);
-    return alt;
+    return alt?.[lang];
   }
 }

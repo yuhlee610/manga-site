@@ -19,4 +19,12 @@ export class StatisticService {
       .get<GetMangasStatisticResponse>(`${MangadexBaseUrl}/statistics/manga${qs}`)
       .pipe(map((response) => response.statistics));
   }
+
+  getStatistic(manga: Manga) {
+    return this.httpClient
+      .get<GetMangasStatisticResponse>(
+        `${MangadexBaseUrl}/statistics/manga/${manga.id}`
+      )
+      .pipe(map(response => response.statistics));
+  }
 }

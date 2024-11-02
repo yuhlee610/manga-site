@@ -52,7 +52,9 @@ export class MangaService {
   }
 
   getManga(id: string) {
-    return this.getMangaById(id).pipe(map(response => response.data));
+    return this.getMangaById(id, { includes: [Includes.COVER_ART, Includes.AUTHOR] }).pipe(
+      map(response => response.data)
+    );
   }
 
   private getMangaList(queryParams: GetSearchMangaRequestOptions) {

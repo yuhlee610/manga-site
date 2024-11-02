@@ -1,4 +1,9 @@
+@if (manga()) {
+  @let mangaData = manga()!;
 
-<div nz-row>
-  Hello
-</div>
+  <app-info-section
+    [manga]="mangaData"
+    [statistic]="statistic()!"></app-info-section>
+
+  <app-chapters></app-chapters>
+}

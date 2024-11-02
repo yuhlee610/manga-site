@@ -1,0 +1,65 @@
+<img
+  class="thumbnail"
+  [ngSrc]="manga() | coverArt: 'lg'"
+  [alt]="manga() | imageAlt"
+  width="550"
+  height="800"
+  priority />
+<div class="info">
+  <h1 class="title" nz-typography>{{ manga() | mangaTitle }}</h1>
+  <nz-flex nzWrap="wrap">
+    @for (tag of manga().attributes.tags; track tag.id) {
+      <app-tag>{{ tag.attributes.name['en'] }}</app-tag>
+    }
+  </nz-flex>
+  <p class="description" nz-typography>
+    {{ manga().attributes.description['en'] }}
+  </p>
+  <div class="meta">
+    <div class="group">
+      <div>
+        <span nz-icon nzType="user" nzTheme="outline" class="icon"></span>
+        <span>Tác giả:</span>
+      </div>
+      <p>{{ manga().relationships[0].attributes.name }}</p>
+    </div>
+    <div class="group">
+      <div>
+        <span
+          nz-icon
+          nzType="exclamation-circle"
+          nzTheme="outline"
+          class="icon"></span>
+        <span>Tình trạng:</span>
+      </div>
+      <p>{{ manga() | mangaStatus }}</p>
+    </div>
+    <div class="group">
+      <div>
+        <span nz-icon nzType="star" nzTheme="fill" class="icon"></span>
+        <span>Rating:</span>
+      </div>
+      <p>{{ statistic()?.rating?.average ?? 0 | number: '1.1-1' }}</p>
+    </div>
+    <div class="group">
+      <div>
+        <span nz-icon nzType="bell" nzTheme="fill" class="icon"></span>
+        <span>Theo dõi:</span>
+      </div>
+      <p>{{ statistic()?.follows ?? 0 | number: '1.0-0' }}</p>
+    </div>
+    <div class="group">
+      <div>
+        <span
+          nz-icon
+          nzType="unordered-list"
+          nzTheme="outline"
+          class="icon"></span>
+        <span>Số chương:</span>
+      </div>
+      <p>{{ manga().attributes.lastChapter | number: '1.0-0' }}</p>
+    </div>
+  </div>
+  <div [appSpace]="28"></div>
+  <button nz-button nzSize="large" nzType="primary">Đọc ngay</button>
+</div>
