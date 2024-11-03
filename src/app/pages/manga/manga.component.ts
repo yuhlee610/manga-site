@@ -5,7 +5,6 @@ import {
   effect,
   inject,
   input,
-  OnInit,
   signal,
 } from '@angular/core';
 import { MangaService } from '../../services/manga/manga.service';
@@ -14,9 +13,9 @@ import { map, switchMap } from 'rxjs';
 import { StatisticService } from '../../services/statistic/statistic.service';
 import { InfoSectionComponent } from './info-section/info-section.component';
 import { ChaptersComponent } from './chapters/chapters.component';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Includes, Order } from '../../models/static';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { PaginationService } from '../../services/pagination/pagination.service';
 
 const ChapterPerPage = 50;
 
@@ -27,12 +26,11 @@ const ChapterPerPage = 50;
   templateUrl: './manga.component.html',
   styleUrl: './manga.component.scss',
 })
-export class MangaComponent implements OnInit {
-  mangaService = inject(MangaService);
-  statisticService = inject(StatisticService);
-  destroyRef = inject(DestroyRef);
-  private router = inject(Router);
-  private activatedRoute = inject(ActivatedRoute);
+export class MangaComponent {
+  private mangaService = inject(MangaService);
+  private statisticService = inject(StatisticService);
+  private destroyRef = inject(DestroyRef);
+  private paginationService = inject(PaginationService);
 
   mangaId = input.required<string>();
   page = input.required({
@@ -49,9 +47,16 @@ export class MangaComponent implements OnInit {
 
   constructor() {
     effect(() => {
-      const subscription = this.fetchMangaFeed(this.page(), this.lang());
+      const mangaAndStatisticSubscription = this.fetchMangaAndStatistic();
+      const mangaFeedSubscription = this.fetchMangaFeed(
+        this.page(),
+        this.lang()
+      );
 
-      this.destroyRef.onDestroy(() => subscription.unsubscribe());
+      this.destroyRef.onDestroy(() => {
+        mangaAndStatisticSubscription.unsubscribe();
+        mangaFeedSubscription.unsubscribe();
+      });
     });
   }
 
@@ -90,21 +95,6 @@ export class MangaComponent implements OnInit {
   }
 
   changePage(pageIndex: number) {
-    this.router.navigate(['./'], {
-      relativeTo: this.activatedRoute,
-      queryParams: { page: pageIndex },
-      queryParamsHandling: 'merge',
-      onSameUrlNavigation: 'reload',
-    });
-  }
-
-  ngOnInit() {
-    const mangaAndStatisticSubscription = this.fetchMangaAndStatistic();
-    const mangaFeedSubscription = this.fetchMangaFeed(this.page(), this.lang());
-
-    this.destroyRef.onDestroy(() => {
-      mangaAndStatisticSubscription.unsubscribe();
-      mangaFeedSubscription.unsubscribe();
-    });
+    this.paginationService.changePage(pageIndex);
   }
 }

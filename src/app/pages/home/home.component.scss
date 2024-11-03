@@ -22,3 +22,9 @@
   grid-template-columns: repeat(6, 1fr);
   gap: 40px 36px;
 }
+
+.pagination {
+  margin: 36px 0;
+  display: flex;
+  justify-content: center;
+}

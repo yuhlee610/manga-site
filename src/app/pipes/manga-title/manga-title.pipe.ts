@@ -8,7 +8,9 @@ import { Manga } from '../../models/mangadex';
 export class MangaTitlePipe implements PipeTransform {
   transform(value: Manga, maxWordsCount: number = Number.MAX_SAFE_INTEGER) {
     const title =
-      value.attributes.title['en'] || value.attributes.title['ja-ro'];
+      value.attributes.title['en'] ||
+      value.attributes.title['ja-ro'] ||
+      value.attributes.title['ja'];
     const words = title.split(' ');
     const truncatedTitle = words.slice(0, maxWordsCount);
 

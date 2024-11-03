@@ -42,7 +42,7 @@ export class MangaService {
     });
   }
 
-  getLatestMangaList() {
+  getLatestMangaList(queryParams: GetSearchMangaRequestOptions) {
     return this.getMangaList({
       availableTranslatedLanguage: DefaultTranslatedLanguages,
       order: {
@@ -50,6 +50,7 @@ export class MangaService {
       },
       includes: [Includes.COVER_ART],
       limit: 30,
+      ...queryParams
     });
   }
 
