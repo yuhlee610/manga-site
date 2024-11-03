@@ -1,9 +1,17 @@
 @if (manga()) {
-  @let mangaData = manga()!;
-
   <app-info-section
-    [manga]="mangaData"
-    [statistic]="statistic()!"></app-info-section>
+    [manga]="manga()!"
+    [statistic]="statistic()!"
+    [totalChapter]="chapterList()!.total"></app-info-section>
 
-  <app-chapters></app-chapters>
+  <app-chapters [chapters]="chapterList()!.data" [lang]="lang()"></app-chapters>
+
+  @if (chapterList() && totalPage() > 1) {
+    <nz-pagination
+      class="pagination"
+      [nzPageIndex]="page()"
+      [nzTotal]="chapterList()!.total"
+      (nzPageIndexChange)="changePage($event)"
+      [nzPageSize]="50"></nz-pagination>
+  }
 }

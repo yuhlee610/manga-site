@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { DefaultTranslatedLanguages, MangadexBaseUrl } from '../constants';
 import {
+  GetMangaIdFeedRequestOptions,
+  GetMangaIdFeedResponse,
   GetMangaIdRequestOptions,
   GetMangaIdResponse,
   GetSearchMangaRequestOptions,
@@ -52,8 +54,15 @@ export class MangaService {
   }
 
   getManga(id: string) {
-    return this.getMangaById(id, { includes: [Includes.COVER_ART, Includes.AUTHOR] }).pipe(
-      map(response => response.data)
+    return this.getMangaById(id, {
+      includes: [Includes.COVER_ART, Includes.AUTHOR],
+    }).pipe(map(response => response.data));
+  }
+
+  getMangaFeed(id: string, queryParams?: GetMangaIdFeedRequestOptions) {
+    const qs = buildQueryStringFromOptions(queryParams);
+    return this.httpClient.get<GetMangaIdFeedResponse>(
+      `${MangadexBaseUrl}/manga/${id}/feed${qs}`
     );
   }
 

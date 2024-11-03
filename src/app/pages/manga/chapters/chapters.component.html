@@ -1,5 +1,5 @@
 <nz-flex nzAlign="center" nzJustify="space-between">
-  <nz-flex nzAlign="center" nzGap="12px">
+  <nz-flex nzAlign="center" nzGap="8px">
     <span
       nz-icon
       nzType="unordered-list"
@@ -7,7 +7,40 @@
       class="chapterIcon"></span>
     <h3 nz-typography class="chapterHeading">Danh sách chương</h3>
   </nz-flex>
-  <div>
-    <nz-switch [(ngModel)]="isVi"></nz-switch> Tiếng Việt
-  </div>
+  <nz-flex nzGap="8px" nzAlign="center">
+    <div class="flag" [innerHTML]="GBFlag"></div>
+    <nz-switch [ngModel]="isVietNamFlag()" (click)="click()"></nz-switch>
+    <div class="flag" [innerHTML]="VNFlag"></div>
+  </nz-flex>
 </nz-flex>
+
+<div [appSpace]="24"></div>
+
+<nz-row>
+  <p nz-col nzSpan="12" nz-typography class="tableHeading">Tên chương</p>
+  <p nz-col nzSpan="6" nz-typography class="tableHeading updatedAt">Ngày cập nhật</p>
+  <p nz-col nzSpan="6" class="translateGroup tableHeading" nz-typography>
+    Nhóm dịch
+  </p>
+</nz-row>
+
+<div [appSpace]="12"></div>
+@for (chapter of chapters(); track chapter.id) {
+  <div [appSpace]="20"></div>
+  <nz-row>
+    <p nz-col nzSpan="12" class="chapterName" nz-typography>
+      {{ chapter | chapterName }}
+    </p>
+    <p nz-col nzSpan="6" class="updatedAt" nz-typography>
+      {{ chapter.attributes.updatedAt | date: 'dd/MM/YYYY' }}
+    </p>
+    <a
+      nz-col
+      nzSpan="6"
+      class="translateGroup"
+      [href]="chapter.relationships[0].attributes.website"
+      nz-typography>
+      {{ chapter.relationships[0].attributes.name }}
+    </a>
+  </nz-row>
+}

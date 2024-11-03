@@ -30,7 +30,7 @@
           nzType="exclamation-circle"
           nzTheme="outline"
           class="icon"></span>
-        <span>Tình trạng:</span>
+        <span nz-typography>Tình trạng:</span>
       </div>
       <p>{{ manga() | mangaStatus }}</p>
     </div>
@@ -39,14 +39,14 @@
         <span nz-icon nzType="star" nzTheme="fill" class="icon"></span>
         <span>Rating:</span>
       </div>
-      <p>{{ statistic()?.rating?.average ?? 0 | number: '1.1-1' }}</p>
+      <p>{{ statistic().rating.average | number: '1.1-1' }}</p>
     </div>
     <div class="group">
       <div>
         <span nz-icon nzType="bell" nzTheme="fill" class="icon"></span>
-        <span>Theo dõi:</span>
+        <span nz-typography>Theo dõi:</span>
       </div>
-      <p>{{ statistic()?.follows ?? 0 | number: '1.0-0' }}</p>
+      <p>{{ statistic().follows | number: '1.0-0' }}</p>
     </div>
     <div class="group">
       <div>
@@ -55,11 +55,22 @@
           nzType="unordered-list"
           nzTheme="outline"
           class="icon"></span>
-        <span>Số chương:</span>
+        <span nz-typography>Số chương:</span>
       </div>
-      <p>{{ manga().attributes.lastChapter | number: '1.0-0' }}</p>
+      <p>{{ totalChapter() | number: '1.0-0' }}</p>
     </div>
   </div>
   <div [appSpace]="28"></div>
-  <button nz-button nzSize="large" nzType="primary">Đọc ngay</button>
+  <nz-flex [nzGap]="24">
+    <button nz-button nzSize="large" nzType="primary">Đọc ngay</button>
+    <a
+      nz-button
+      nzSize="large"
+      nzType="link"
+      [href]="mangadexLink"
+      target="_blank"
+      rel="noopener noreferrer">
+      Link Mangadex
+    </a>
+  </nz-flex>
 </div>

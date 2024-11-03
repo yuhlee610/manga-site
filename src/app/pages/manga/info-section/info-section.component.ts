@@ -35,4 +35,9 @@ import { SpaceDirective } from '../../../directives/space/space.directive';
 export class InfoSectionComponent {
   manga = input.required<Manga>();
   statistic = input.required<MangaStatistic>();
+  totalChapter = input.required<number>()
+
+  get mangadexLink() {
+    return `https://mangadex.org/title/${this.manga().id}`;
+  }
 }
