@@ -104,7 +104,7 @@ export class HomeComponent {
         .getLatestMangaList({
           offset: (this.page() - 1) * MangaPerPage,
         })
-        .pipe(shareReplay(1));
+        .pipe(shareReplay(2));
 
       this.latestMangaStatistics$ = this.latestMangaList$.pipe(
         switchMap(mangaList =>

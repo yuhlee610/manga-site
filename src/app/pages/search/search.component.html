@@ -1,0 +1,34 @@
+@if (tagList()) {
+  <app-search-form
+    [tagList]="tagList()"
+    [initialValues]="initialValues()"
+    (search)="search($event)"></app-search-form>
+
+  <div [appSpace]="36"></div>
+
+  <ng-container *ngIf="mangaList$ | async as mangaList">
+    <div class="cards">
+      <ng-container *ngIf="latestChapters$ | async as latestChapters">
+        <ng-container *ngIf="mangaStatistics$ | async as mangaStatistics">
+          @for (manga of mangaList?.data; track manga.id) {
+            <app-manga-card
+              [manga]="manga"
+              [latestChapter]="
+                latestChapters?.[manga.attributes.latestUploadedChapter]
+              "
+              [statistic]="mangaStatistics?.[manga.id]"></app-manga-card>
+          }
+        </ng-container>
+      </ng-container>
+    </div>
+
+    @if (mangaList) {
+    <nz-pagination
+      class="pagination"
+      [nzPageIndex]="page()"
+      [nzTotal]="mangaList.total | paginationTotalItems"
+      (nzPageIndexChange)="changePage($event)"
+      [nzPageSize]="pageSize"></nz-pagination>
+  }
+  </ng-container>
+}

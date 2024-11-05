@@ -4,7 +4,7 @@ import { MyListComponent } from './pages/my-list/my-list.component';
 import { HistoryComponent } from './pages/history/history.component';
 import { PopularComponent } from './pages/popular/popular.component';
 import { MangaComponent } from './pages/manga/manga.component';
-import { TimTruyenComponent } from './pages/tim-truyen/tim-truyen.component';
+import { SearchComponent } from './pages/search/search.component';
 
 export const routes: Routes = [
   {
@@ -31,7 +31,7 @@ export const routes: Routes = [
     component: MangaComponent,
   },
   {
-    path: 'tim-truyen',
-    component: TimTruyenComponent
+    path: 'search',
+    component: SearchComponent
   }
 ];

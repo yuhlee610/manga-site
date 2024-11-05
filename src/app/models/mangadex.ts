@@ -255,7 +255,8 @@ export type GetMangaTagResponse = TagResponse;
  *   prop2?: string
  * }
  */
-export type RequiredPick<T, K extends keyof T> = Partial<Omit<T, K>> & Required<Pick<T, K>>;
+export type RequiredPick<T, K extends keyof T> = Partial<Omit<T, K>> &
+  Required<Pick<T, K>>;
 
 /**
  * Makes at least one property required in the absence of the others.
@@ -274,7 +275,10 @@ export type RequiredPick<T, K extends keyof T> = Partial<Omit<T, K>> & Required<
  *   prop2: string
  * }
  */
-export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T, Keys>> &
+export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<
+  T,
+  Exclude<keyof T, Keys>
+> &
   {
     [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
   }[Keys];
@@ -919,7 +923,14 @@ export interface RecoverCompleteBody {
 }
 
 export interface UpdateMangaStatus {
-  status: 'reading' | 'on_hold' | 'plan_to_read' | 'dropped' | 're_reading' | 'completed' | null;
+  status:
+    | 'reading'
+    | 'on_hold'
+    | 'plan_to_read'
+    | 'dropped'
+    | 're_reading'
+    | 'completed'
+    | null;
 }
 
 export interface ChapterRequest {
@@ -997,7 +1008,10 @@ export interface ScanlationGroupList {
   total: number;
 }
 
-export type MangaRelationCreate = RequiredPick<MangaRelationRequest, 'targetManga' | 'relation'>;
+export type MangaRelationCreate = RequiredPick<
+  MangaRelationRequest,
+  'targetManga' | 'relation'
+>;
 
 export interface MangaRelationRequest {
   /** UUID formatted string */
@@ -1273,13 +1287,23 @@ export interface ForumsThreadResponse {
 export type ReferenceExpansionAuthor = 'manga'[];
 
 /** Reference expansion options for chapter entities or lists */
-export type ReferenceExpansionChapter = ('manga' | 'scanlation_group' | 'user')[];
+export type ReferenceExpansionChapter = (
+  | 'manga'
+  | 'scanlation_group'
+  | 'user'
+)[];
 
 /** Reference expansion options for cover art entities or lists */
 export type ReferenceExpansionCoverArt = ('manga' | 'user')[];
 
 /** Reference expansion options for manga entities or lists */
-export type ReferenceExpansionManga = ('manga' | 'cover_art' | 'author' | 'artist' | 'tag')[];
+export type ReferenceExpansionManga = (
+  | 'manga'
+  | 'cover_art'
+  | 'author'
+  | 'artist'
+  | 'tag'
+)[];
 
 /** Reference expansion options for manga relation entities or lists */
 export type ReferenceExpansionMangaRelation = 'manga'[];
@@ -1327,7 +1351,8 @@ export interface GetMangasStatisticResponse {
 
 export type ExtendChapter = Chapter & {
   manga?: Partial<Manga> & Pick<Manga, 'id' | 'type'>;
-  scanlation_group?: Partial<ScanlationGroup> & Pick<ScanlationGroup, 'id' | 'type'>;
+  scanlation_group?: Partial<ScanlationGroup> &
+    Pick<ScanlationGroup, 'id' | 'type'>;
 };
 
 export type ExtendManga = Manga & {
@@ -1342,3 +1367,72 @@ export interface ChapterItem {
   id: string;
   others?: string[];
 }
+
+export const StatusOptions = [
+  {
+    value: MangaPublicationStatus.COMPLETED,
+    label: 'Đã hoàn thành',
+  },
+  {
+    value: MangaPublicationStatus.ONGOING,
+    label: 'Đang ra',
+  },
+  {
+    value: MangaPublicationStatus.CANCELLED,
+    label: 'Bị hủy',
+  },
+  {
+    value: MangaPublicationStatus.HIATUS,
+    label: 'Tạm dừng',
+  },
+];
+
+export const MangaOrderOptions = [
+  {
+    value: 'title.asc',
+    label: 'Bảng chữ cái',
+  },
+  {
+    value: 'updatedAt.desc',
+    label: 'Mới cập nhật',
+  },
+  {
+    value: 'year.desc',
+    label: 'Truyện mới',
+  },
+  {
+    value: 'followedCount.desc',
+    label: 'Theo dõi nhiều nhất',
+  },
+  {
+    value: 'relevance.desc',
+    label: 'Liên quan nhất',
+  },
+  {
+    value: 'rating.desc',
+    label: 'Đánh giá cao nhất',
+  },
+];
+
+export const MangaPublicationDemographicOptions = [
+  {
+    value: MangaPublicationDemographic.SHOUNEN,
+    label: 'Shounen',
+  },
+  {
+    value: MangaPublicationDemographic.NONE,
+    label: 'None',
+  },
+  {
+    value: MangaPublicationDemographic.SHOUJO,
+    label: 'Shoujo',
+  },
+  {
+    value: MangaPublicationDemographic.JOSEI,
+    label: 'Josei',
+  },
+  {
+    value: MangaPublicationDemographic.SEINEN,
+    label: 'Seinen',
+  },
+];

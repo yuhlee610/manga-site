@@ -19,6 +19,15 @@ import { map, of } from 'rxjs';
 export class MangaService {
   private httpClient = inject(HttpClient);
 
+  searchManga(queryParams: GetSearchMangaRequestOptions) {
+    return this.getMangaList({
+      availableTranslatedLanguage: DefaultTranslatedLanguages,
+      includes: [Includes.COVER_ART],
+      limit: 30,
+      ...queryParams,
+    });
+  }
+
   getFeatureMangaList() {
     return this.getMangaList({
       availableTranslatedLanguage: DefaultTranslatedLanguages,
@@ -50,7 +59,7 @@ export class MangaService {
       },
       includes: [Includes.COVER_ART],
       limit: 30,
-      ...queryParams
+      ...queryParams,
     });
   }
 

@@ -1,0 +1,98 @@
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+  <nz-row nzAlign="middle">
+    <nz-col nzSpan="3"><label for="title">Tên truyện</label></nz-col>
+    <nz-col nzSpan="8">
+      <input
+        nz-input
+        formControlName="title"
+        placeholder="Nhập tên truyện cần tìm"
+        nzSize="large"
+        id="title" />
+    </nz-col>
+
+    <nz-col nzOffset="2" nzSpan="3">
+      <label for="status">Tình trạng</label>
+    </nz-col>
+    <nz-col nzSpan="8">
+      <nz-select
+        class="select"
+        nzSize="large"
+        id="status"
+        formControlName="status"
+        nzPlaceHolder="Chọn tiến độ">
+        @for (option of statusOptions; track option.value) {
+          <nz-option
+            [nzValue]="option.value"
+            [nzLabel]="option.label"></nz-option>
+        }
+      </nz-select>
+    </nz-col>
+  </nz-row>
+
+  <div [appSpace]="32"></div>
+
+  <nz-row nzAlign="middle">
+    <nz-col nzSpan="3"><label for="sort">Sắp xếp theo</label></nz-col>
+    <nz-col nzSpan="8">
+      <nz-select class="select" nzSize="large" id="sort" formControlName="sort">
+        @for (option of mangaOrderOptions; track option.value) {
+          <nz-option
+            [nzValue]="option.value"
+            [nzLabel]="option.label"></nz-option>
+        }
+      </nz-select>
+    </nz-col>
+
+    <nz-col nzOffset="2" nzSpan="3">
+      <label for="publicationDemographic">Dành cho</label>
+    </nz-col>
+    <nz-col nzSpan="8">
+      <nz-select
+        class="select"
+        formControlName="publicationDemographic"
+        nzSize="large"
+        id="publicationDemographic"
+        nzPlaceHolder="Chọn thể loại theo giới tính, độ tuổi">
+        @for (option of publicationDemographicOptions; track option.value) {
+          <nz-option
+            [nzValue]="option.value"
+            [nzLabel]="option.label"></nz-option>
+        }
+      </nz-select>
+    </nz-col>
+  </nz-row>
+
+  <div [appSpace]="32"></div>
+
+  <nz-row nzAlign="middle">
+    <nz-col nzSpan="3"><label for="includedTags">Thể loại</label></nz-col>
+    <nz-col nzSpan="8">
+      <nz-select
+        class="select"
+        nzSize="large"
+        id="includedTags"
+        formControlName="includedTags"
+        nzMode="multiple"
+        nzPlaceHolder="Chọn thể loại">
+        @if (tagList()) {
+          @let tagOptions = tagList()!;
+          @for (option of tagOptions; track option.id) {
+            <nz-option
+              [nzValue]="option.id"
+              [nzLabel]="option.attributes.name['en']"></nz-option>
+          }
+        }
+      </nz-select>
+    </nz-col>
+    <nz-col nzOffset="10" nzSpan="3">
+      <button
+        nz-button
+        [nzBlock]="true"
+        nzSize="large"
+        nzType="primary"
+        type="submit">
+        Tìm kiếm
+      </button>
+    </nz-col>
+  </nz-row>
+</form>
