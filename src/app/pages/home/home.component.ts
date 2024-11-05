@@ -100,26 +100,30 @@ export class HomeComponent {
 
   constructor() {
     effect(() => {
-      this.latestMangaList$ = this.mangaService
-        .getLatestMangaList({
-          offset: (this.page() - 1) * MangaPerPage,
-        })
-        .pipe(shareReplay(2));
-
-      this.latestMangaStatistics$ = this.latestMangaList$.pipe(
-        switchMap(mangaList =>
-          this.statisticService.findStatisticsFromMangaList(
-            mangaList?.data as Manga[]
-          )
-        )
-      );
-
-      this.latestChapters$ = this.latestMangaList$.pipe(
-        switchMap(mangaList =>
-          this.chapterService.getLatestChapterList(mangaList?.data as Manga[])
-        )
-      );
+      this.fetchData();
     });
+  }
+
+  private fetchData() {
+    this.latestMangaList$ = this.mangaService
+      .getLatestMangaList({
+        offset: (this.page() - 1) * MangaPerPage,
+      })
+      .pipe(shareReplay(2));
+
+    this.latestMangaStatistics$ = this.latestMangaList$.pipe(
+      switchMap(mangaList =>
+        this.statisticService.findStatisticsFromMangaList(
+          mangaList?.data as Manga[]
+        )
+      )
+    );
+
+    this.latestChapters$ = this.latestMangaList$.pipe(
+      switchMap(mangaList =>
+        this.chapterService.getLatestChapterList(mangaList?.data as Manga[])
+      )
+    );
   }
 
   changePage(pageIndex: number) {
