@@ -1,10 +1,13 @@
 import { Routes } from '@angular/router';
-import { featureMangaListResolver, HomeComponent } from './pages/home/home.component';
-import { MyListComponent } from './pages/my-list/my-list.component';
-import { HistoryComponent } from './pages/history/history.component';
-import { PopularComponent } from './pages/popular/popular.component';
-import { MangaComponent } from './pages/manga/manga.component';
-import { SearchComponent } from './pages/search/search.component';
+import {
+  featureMangaListResolver,
+  HomeComponent,
+} from './features/home/home.component';
+import { MyListComponent } from './features/my-list/my-list.component';
+import { HistoryComponent } from './features/history/history.component';
+import { PopularComponent } from './features/popular/popular.component';
+import { MangaComponent } from './features/manga/manga.component';
+import { SearchComponent } from './features/search/search.component';
 
 export const routes: Routes = [
   {
@@ -32,6 +35,6 @@ export const routes: Routes = [
   },
   {
     path: 'search',
-    component: SearchComponent
-  }
+    component: SearchComponent,
+  },
 ];
