@@ -1,4 +1,13 @@
-import { Component, computed, effect, inject, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  DestroyRef,
+  effect,
+  inject,
+  input,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import _ from 'lodash';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -23,7 +32,13 @@ import { ChapterService } from '../../shared/services/chapter/chapter.service';
 import { PaginationService } from '../../shared/services/pagination/pagination.service';
 import { SearchFormComponent } from './components/search-form/search-form.component';
 
-const transformInput = (value: string | undefined) => value || '';
+type QueryParams = {
+  title: string;
+  status: string;
+  sort: string;
+  publicationDemographic: string;
+  includedTags: string[];
+};
 
 @Component({
   selector: 'app-search',
@@ -40,7 +55,7 @@ const transformInput = (value: string | undefined) => value || '';
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
 })
-export class SearchComponent {
+export class SearchComponent implements OnInit {
   private tagService = inject(TagService);
   private mangaService = inject(MangaService);
   private router = inject(Router);
@@ -48,37 +63,16 @@ export class SearchComponent {
   private statisticService = inject(StatisticService);
   private chapterService = inject(ChapterService);
   private paginationService = inject(PaginationService);
+  private destroyRef = inject(DestroyRef);
 
   pageSize = 30;
 
-  title = input('', {
-    transform: transformInput,
-  });
-  status = input('', {
-    transform: transformInput,
-  });
-  publicationDemographic = input('', {
-    transform: transformInput,
-  });
-  includedTags = input([], {
-    transform: (value: string | string[] | undefined) =>
-      typeof value === 'string' ? [value] : value || [],
-  });
-  sort = input('updatedAt.desc', {
-    transform: (value: string) => value ?? 'updatedAt.desc',
-  });
+  initialValues = signal<QueryParams | undefined>(undefined);
   page = input(1, {
     transform: (value: string) => (value ? Number.parseInt(value) : 1),
   });
 
   tagList = toSignal(this.tagService.getTagList());
-  initialValues = computed(() => ({
-    title: this.title(),
-    status: this.status(),
-    sort: this.sort(),
-    publicationDemographic: this.publicationDemographic(),
-    includedTags: this.includedTags(),
-  }));
   mangaList$?: Observable<MangaList>;
   mangaStatistics$?: Observable<Record<string, MangaStatistic>>;
   latestChapters$?: Observable<Dictionary<Chapter>>;
@@ -89,9 +83,26 @@ export class SearchComponent {
     });
   }
 
+  ngOnInit(): void {
+    const subscription = this.activatedRoute.queryParamMap.subscribe(params => {
+      this.initialValues.set({
+        title: params.get('title') || '',
+        status: params.get('status') || '',
+        sort: params.get('sort') || 'updatedAt.desc',
+        publicationDemographic: params.get('publicationDemographic') || '',
+        includedTags: params.get('includedTags')?.split(',') || [],
+      });
+    });
+
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
+  }
+
   private buildSearchParams(): GetSearchMangaRequestOptions {
+    const values = this.initialValues();
+    if (!values) return {};
+
     const { title, status, sort, publicationDemographic, includedTags } =
-      this.initialValues();
+      values;
     const [orderKey, orderValue] = sort.split('.');
 
     return {
@@ -111,7 +122,7 @@ export class SearchComponent {
 
     this.mangaList$ = this.mangaService
       .searchManga(params)
-      .pipe(shareReplay(1));
+      .pipe(shareReplay(2));
 
     this.mangaStatistics$ = this.mangaList$.pipe(
       switchMap(mangaList =>
@@ -131,9 +142,8 @@ export class SearchComponent {
   private formatQueryParams(params: Record<string, string | string[]>) {
     return _.omitBy(params, value => {
       if (typeof value === 'string') return value === '';
-      if (Array.isArray(value) && value.length === 1 && value[0] === '') {
-        return true;
-      }
+      if (Array.isArray(value) && value.length === 1 && value[0] === '') return true;
+
       return false;
     });
   }

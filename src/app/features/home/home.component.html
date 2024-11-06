@@ -22,11 +22,11 @@
 
 <div [appSpace]="36"></div>
 
-<ng-container *ngIf="latestMangaList$ | async as latestMangaList">
+@if (latestMangaList$ | async; as latestMangaList) {
   <div class="row">
     <p class="heading" nz-typography>Truyện mới cập nhật</p>
     <div class="cards">
-      <ng-container *ngIf="latestChapters$ | async as latestChapters">
+      @if (latestChapters$ | async; as latestChapters) {
         <ng-container
           *ngIf="latestMangaStatistics$ | async as latestMangaStatistics">
           @for (manga of latestMangaList?.data; track manga.id) {
@@ -38,7 +38,7 @@
               [statistic]="latestMangaStatistics?.[manga.id]"></app-manga-card>
           }
         </ng-container>
-      </ng-container>
+      }
     </div>
   </div>
 
@@ -50,4 +50,4 @@
       (nzPageIndexChange)="changePage($event)"
       [nzPageSize]="pageSize"></nz-pagination>
   }
-</ng-container>
+}

@@ -18,7 +18,7 @@ type SearchFormType = Partial<{
   status: string;
   sort: string;
   publicationDemographic: string;
-  tags: string[];
+  includedTags: string[];
 }>;
 
 @Component({
@@ -62,8 +62,9 @@ export class SearchFormComponent {
   }
 
   onSubmit() {
-    this.search.emit(
-      this.searchForm.value as Record<string, string | string[]>
-    );
+    this.search.emit({
+      ...this.searchForm.value,
+      includedTags: this.searchForm.value.includedTags?.join(','),
+    } as Record<string, string | string[]>);
   }
 }
