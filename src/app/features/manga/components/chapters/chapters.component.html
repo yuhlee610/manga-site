@@ -18,7 +18,9 @@
 
 <nz-row>
   <p nz-col nzSpan="12" nz-typography class="tableHeading">Tên chương</p>
-  <p nz-col nzSpan="6" nz-typography class="tableHeading updatedAt">Ngày cập nhật</p>
+  <p nz-col nzSpan="6" nz-typography class="tableHeading updatedAt">
+    Ngày cập nhật
+  </p>
   <p nz-col nzSpan="6" class="translateGroup tableHeading" nz-typography>
     Nhóm dịch
   </p>
@@ -28,9 +30,14 @@
 @for (chapter of chapters(); track chapter.id) {
   <div [appSpace]="20"></div>
   <nz-row>
-    <p nz-col nzSpan="12" class="chapterName" nz-typography>
+    <a
+      nz-col
+      nzSpan="12"
+      class="chapterName"
+      [routerLink]="['/chapter', chapter.id]"
+      nz-typography>
       {{ chapter | chapterName }}
-    </p>
+    </a>
     <p nz-col nzSpan="6" class="updatedAt" nz-typography>
       {{ chapter.attributes.updatedAt | date: 'dd/MM/YYYY' }}
     </p>

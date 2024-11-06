@@ -8,6 +8,7 @@ import { HistoryComponent } from './features/history/history.component';
 import { PopularComponent } from './features/popular/popular.component';
 import { MangaComponent } from './features/manga/manga.component';
 import { SearchComponent } from './features/search/search.component';
+import { ChapterComponent } from './features/chapter/chapter.component';
 
 export const routes: Routes = [
   {
@@ -32,6 +33,10 @@ export const routes: Routes = [
   {
     path: 'manga/:mangaId',
     component: MangaComponent,
+  },
+  {
+    path: 'chapter/:chapterId',
+    component: ChapterComponent,
   },
   {
     path: 'search',

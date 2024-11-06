@@ -1,0 +1,8 @@
+@if (content$ | async; as content) {
+  @for (item of content.chapter.data; track item) {
+    <img
+      [src]="item | chapterImage: content.baseUrl : content.chapter.hash"
+      loading="lazy"
+      class="image" />
+  }
+}
