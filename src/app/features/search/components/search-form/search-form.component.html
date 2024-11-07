@@ -15,6 +15,8 @@
     </nz-col>
     <nz-col nzSpan="8">
       <nz-select
+        nzShowSearch
+        nzAllowClear
         class="select"
         nzSize="large"
         id="status"
@@ -34,7 +36,13 @@
   <nz-row nzAlign="middle">
     <nz-col nzSpan="3"><label for="sort">Sắp xếp theo</label></nz-col>
     <nz-col nzSpan="8">
-      <nz-select class="select" nzSize="large" id="sort" formControlName="sort">
+      <nz-select
+        class="select"
+        nzSize="large"
+        id="sort"
+        formControlName="sort"
+        nzShowSearch
+        nzAllowClear>
         @for (option of mangaOrderOptions; track option.value) {
           <nz-option
             [nzValue]="option.value"
@@ -48,6 +56,8 @@
     </nz-col>
     <nz-col nzSpan="8">
       <nz-select
+        nzShowSearch
+        nzAllowClear
         class="select"
         formControlName="publicationDemographic"
         nzSize="large"
@@ -68,6 +78,8 @@
     <nz-col nzSpan="3"><label for="includedTags">Thể loại</label></nz-col>
     <nz-col nzSpan="8">
       <nz-select
+        nzShowSearch
+        nzAllowClear
         class="select"
         nzSize="large"
         id="includedTags"

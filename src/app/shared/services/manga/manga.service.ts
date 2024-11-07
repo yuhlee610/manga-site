@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import {
+  GetMangaIdAggregateResponse,
   GetMangaIdFeedRequestOptions,
   GetMangaIdFeedResponse,
   GetMangaIdRequestOptions,
@@ -11,7 +12,10 @@ import {
 import { Includes, Order } from '../../../models/static';
 import { map, of } from 'rxjs';
 import { buildQueryStringFromOptions } from '../../../core/utils';
-import { DefaultTranslatedLanguages, MangadexBaseUrl } from '../../../core/constants';
+import {
+  DefaultTranslatedLanguages,
+  MangadexBaseUrl,
+} from '../../../core/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -63,8 +67,8 @@ export class MangaService {
     });
   }
 
-  getManga(id: string) {
-    return this.getMangaById(id, {
+  getManga(mangaId: string) {
+    return this.getMangaById(mangaId, {
       includes: [Includes.COVER_ART, Includes.AUTHOR],
     }).pipe(map(response => response.data));
   }
@@ -73,6 +77,17 @@ export class MangaService {
     const qs = buildQueryStringFromOptions(queryParams);
     return this.httpClient.get<GetMangaIdFeedResponse>(
       `${MangadexBaseUrl}/manga/${id}/feed${qs}`
+    );
+  }
+
+  getMangaAggregate(mangaId: string, lang: 'vi' | 'en') {
+    console.log('hello');
+    
+    const qs = buildQueryStringFromOptions({
+      translatedLanguage: [lang],
+    });
+    return this.httpClient.get<GetMangaIdAggregateResponse>(
+      `${MangadexBaseUrl}/manga/${mangaId}/aggregate${qs}`
     );
   }
 

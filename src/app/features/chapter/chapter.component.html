@@ -1,3 +1,11 @@
+@if (chapter$ | async; as chapter) {
+  <a [routerLink]="['/manga', chapter!.data.relationships[0].id]">
+    <h1 nz-typography>
+      {{ chapter!.data.relationships[0].attributes.title | mangaTitle }}
+    </h1>
+  </a>
+}
+
 @if (content$ | async; as content) {
   @for (item of content.chapter.data; track item) {
     <img
@@ -6,3 +14,5 @@
       class="image" />
   }
 }
+
+@if (manga$ | async; as manga) {}

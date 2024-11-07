@@ -2,11 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Manga } from '../../../models/mangadex';
 import { map } from 'rxjs';
-import { GetChapterResponse } from '../../../models/chapter';
+import {
+  GetChapterIdResponse,
+  GetChapterResponse,
+} from '../../../models/chapter';
 import _ from 'lodash';
 import { buildQueryStringFromOptions } from '../../../core/utils';
 import { MangadexBaseUrl } from '../../../core/constants';
 import { GetAtHomeServerChapterIdResponse } from '../../../models/atHome';
+import { Includes } from '../../../models/static';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +35,16 @@ export class ChapterService {
       );
   }
 
-  getChapterDetail(chapterId: string) {
+  getChapter(chapterId: string) {
+    const qs = buildQueryStringFromOptions({
+      includes: [Includes.MANGA],
+    });
+    return this.httpClient.get<GetChapterIdResponse>(
+      `${MangadexBaseUrl}/chapter/${chapterId}${qs}`
+    );
+  }
+
+  getChapterContent(chapterId: string) {
     return this.httpClient.get<GetAtHomeServerChapterIdResponse>(
       `${MangadexBaseUrl}/at-home/server/${chapterId}`
     );

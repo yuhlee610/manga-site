@@ -122,7 +122,7 @@ export class SearchComponent implements OnInit {
 
     this.mangaList$ = this.mangaService
       .searchManga(params)
-      .pipe(shareReplay(2));
+      .pipe(shareReplay(1));
 
     this.mangaStatistics$ = this.mangaList$.pipe(
       switchMap(mangaList =>

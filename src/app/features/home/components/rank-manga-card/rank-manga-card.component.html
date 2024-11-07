@@ -7,7 +7,7 @@
     width="60" />
   <div>
     <h3 nz-typography class="title">
-      {{ manga() | mangaTitle }}
+      {{ manga().attributes.title| mangaTitle }}
     </h3>
     <nz-space>
       <div *nzSpaceItem nz-flex [nzGap]="6">

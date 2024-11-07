@@ -45,9 +45,9 @@
       nz-col
       nzSpan="6"
       class="translateGroup"
-      [href]="chapter.relationships[0].attributes.website"
+      [href]="chapter.relationships[0].attributes?.website"
       nz-typography>
-      {{ chapter.relationships[0].attributes.name }}
+      {{ chapter.relationships[0].attributes?.name }}
     </a>
   </nz-row>
 }

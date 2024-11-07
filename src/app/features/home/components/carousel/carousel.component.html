@@ -20,7 +20,7 @@
         </a>
         <div class="mangaInfo">
           <a [routerLink]="['/manga', manga.id]">
-            <h2 nz-typography>{{ manga | mangaTitle }}</h2>
+            <h2 nz-typography>{{ manga.attributes.title | mangaTitle }}</h2>
           </a>
           <nz-flex nzWrap="wrap">
             @for (tag of manga.attributes.tags; track tag.id) {

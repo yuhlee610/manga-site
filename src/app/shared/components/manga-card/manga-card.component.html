@@ -22,7 +22,7 @@
 <div [appSpace]="12"></div>
 <a [routerLink]="['/manga', manga().id]">
   <h3 nz-typography class="title">
-    {{ manga() | mangaTitle: 8 }}
+    {{ manga().attributes.title| mangaTitle: 8 }}
   </h3>
 </a>
 <div class="chapterInfo">

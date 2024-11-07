@@ -1,7 +1,15 @@
+@import '../../../variables.scss';
+
 :host {
   max-width: 2000px;
   margin: auto;
   display: block;
+}
+
+h1 {
+  color: $primary-color;
+  margin: 0 0 60px;
+  text-align: center;
 }
 
 .image {
