@@ -10,7 +10,7 @@ import {
   GetSearchMangaResponse,
 } from '../../../models/mangadex';
 import { Includes, Order } from '../../../models/static';
-import { map, of } from 'rxjs';
+import { map } from 'rxjs';
 import { buildQueryStringFromOptions } from '../../../core/utils';
 import {
   DefaultTranslatedLanguages,

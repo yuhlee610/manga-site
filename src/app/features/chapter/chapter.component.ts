@@ -12,6 +12,8 @@ import { MangaTitlePipe } from '../../shared/pipes/manga-title/manga-title.pipe'
 import { RouterLink } from '@angular/router';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import _ from 'lodash';
+import { RelationshipPipe } from '../../shared/pipes/relationship/relationship.pipe';
+import { MapPipe } from '../../shared/pipes/map/map.pipe';
 
 @Component({
   selector: 'app-chapter',
@@ -24,6 +26,8 @@ import _ from 'lodash';
     MangaTitlePipe,
     RouterLink,
     NzSelectModule,
+    RelationshipPipe,
+    MapPipe,
   ],
   templateUrl: './chapter.component.html',
   styleUrl: './chapter.component.scss',
@@ -41,20 +45,22 @@ export class ChapterComponent implements OnInit {
 
   ngOnInit(): void {
     this.content$ = this.chapterService.getChapterContent(this.chapterId());
-    this.chapter$ = this.chapterService
-      .getChapter(this.chapterId())
-      .pipe(shareReplay(1), tap({
-        next: data => console.log(data)
-      }));
+    this.chapter$ = this.chapterService.getChapter(this.chapterId()).pipe(
+      shareReplay(1),
+      tap({
+        next: data => console.log(data),
+      })
+    );
     this.manga$ = this.chapter$.pipe(
-      map(chapter => chapter.data.relationships[1].id),
+      map(chapter => {
+        console.log(chapter.data.relationships);
+        return chapter.data.relationships[1].id;
+      }),
       switchMap(mangaId =>
         this.mangaService.getMangaAggregate(mangaId, this.lang() ?? 'vi')
       ),
       map(response => {
-        // console.log(Object.values(response.volumes));
-        
-        // console.log(_.pick(Object.values(response.volumes), 'chapters'));
+        console.log(response);
 
         return [
           {

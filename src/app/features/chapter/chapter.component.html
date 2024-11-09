@@ -1,7 +1,8 @@
 @if (chapter$ | async; as chapter) {
-  <a [routerLink]="['/manga', chapter!.data.relationships[0].id]">
+  @let manga = chapter.data.relationships | relationship: 'manga';
+  <a [routerLink]="['/manga', manga | map: 'id']">
     <h1 nz-typography>
-      {{ chapter!.data.relationships[0].attributes.title | mangaTitle }}
+      {{ manga | map: 'attributes.title' | mangaTitle }}
     </h1>
   </a>
 }
