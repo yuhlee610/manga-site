@@ -24,7 +24,7 @@
           </a>
           <nz-flex nzWrap="wrap">
             @for (tag of manga.attributes.tags; track tag.id) {
-              <app-tag>{{ tag.attributes.name['en'] }}</app-tag>
+              <app-tag [tagId]="tag.id">{{ tag.attributes.name['en'] }}</app-tag>
             }
           </nz-flex>
           <nz-space>

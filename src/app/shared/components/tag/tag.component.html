@@ -1,3 +1,5 @@
-<nz-tag [nzColor]="'#48C173'">
-  <ng-content />
-</nz-tag>
+<a [routerLink]="['/search']" [queryParams]="{ includedTags: tagId() }">
+  <nz-tag [nzColor]="'#48C173'">
+    <ng-content />
+  </nz-tag>
+</a>
