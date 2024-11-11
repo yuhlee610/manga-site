@@ -12,8 +12,35 @@
     <img
       [src]="item | chapterImage: content.baseUrl : content.chapter.hash"
       loading="lazy"
-      class="image" />
+      class="image"
+      alt="" />
   }
 }
 
-@if (manga$ | async; as manga) {}
+@if (chapterList().length) {
+  <div class="navigation">
+    <button
+      nz-button
+      nzSize="large"
+      nzType="primary"
+      (click)="prev()"
+      [disabled]="chapterList()[0].id === chapterId()">
+      Chương trước
+    </button>
+    <nz-select [ngModel]="chapterId()" class="chapters" nzSize="large">
+      @for (chapter of chapterList(); track chapter.id) {
+        <nz-option
+          [nzValue]="chapter.id"
+          [nzLabel]="chapter.chapter"></nz-option>
+      }
+    </nz-select>
+    <button
+      nz-button
+      nzSize="large"
+      nzType="primary"
+      (click)="next()"
+      [disabled]="chapterList()[chapterList().length - 1].id === chapterId()">
+      Chương sau
+    </button>
+  </div>
+}

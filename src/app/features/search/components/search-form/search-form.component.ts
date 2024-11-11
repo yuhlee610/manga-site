@@ -4,7 +4,6 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import _ from 'lodash';
 import { SpaceDirective } from '../../../../shared/directives/space/space.directive';
 import {
   MangaOrderOptions,

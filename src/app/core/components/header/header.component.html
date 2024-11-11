@@ -1,6 +1,6 @@
 <div nz-flex nzJustify="space-between" nzAlign="center">
   <nz-input-group [nzPrefix]="prefixTemplateSearch" class="input">
-    <input nz-input placeholder="Search here" />
+    <input nz-input placeholder="Search here" [(ngModel)]="title" (keydown)="submit($event)" />
   </nz-input-group>
   <ul class="links" nz-flex nzGap="48px">
     <li>

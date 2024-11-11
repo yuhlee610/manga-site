@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { LocalizedString, Manga } from '../../../models/mangadex';
+import { LocalizedString } from '../../../models/mangadex';
 
 @Pipe({
   name: 'mangaTitle',
@@ -10,7 +10,6 @@ export class MangaTitlePipe implements PipeTransform {
     value: T,
     maxWordsCount: number = Number.MAX_SAFE_INTEGER
   ) {
-    console.log(value)
     const title = value['en'] || value['ja-ro'] || value['ja'];
     const words = title.split(' ');
     const truncatedTitle = words.slice(0, maxWordsCount);

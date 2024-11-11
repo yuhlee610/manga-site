@@ -7,7 +7,12 @@ import {
   input,
   signal,
 } from '@angular/core';
-import { ChapterList, Manga, MangaStatistic } from '../../models/mangadex';
+import {
+  Chapter,
+  ChapterList,
+  Manga,
+  MangaStatistic,
+} from '../../models/mangadex';
 import { map, switchMap } from 'rxjs';
 import { Includes, Order } from '../../models/static';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
@@ -43,6 +48,8 @@ export class MangaComponent {
   manga = signal<Manga | undefined>(undefined);
   statistic = signal<MangaStatistic | undefined>(undefined);
   chapterList = signal<ChapterList | undefined>(undefined);
+  firstChapter = signal<Chapter | undefined>(undefined);
+  
   totalPage = computed(() => (this.chapterList()?.total ?? 0) / ChapterPerPage);
 
   constructor() {
@@ -52,10 +59,12 @@ export class MangaComponent {
         this.page(),
         this.lang()
       );
+      const firstChapterSubscription = this.fetchFirstChapter(this.lang());
 
       this.destroyRef.onDestroy(() => {
         mangaAndStatisticSubscription.unsubscribe();
         mangaFeedSubscription.unsubscribe();
+        firstChapterSubscription.unsubscribe();
       });
     });
   }
@@ -91,6 +100,20 @@ export class MangaComponent {
       })
       .subscribe({
         next: chapterListData => this.chapterList.set(chapterListData),
+      });
+  }
+
+  private fetchFirstChapter(lang: string) {
+    return this.mangaService
+      .getMangaFeed(this.mangaId(), {
+        limit: 1,
+        translatedLanguage: [lang === 'en' ? 'en' : 'vi'],
+        order: {
+          chapter: Order.ASC,
+        },
+      })
+      .subscribe({
+        next: chapterListData => this.firstChapter.set(chapterListData.data[0]),
       });
   }
 

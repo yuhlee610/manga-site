@@ -6,7 +6,9 @@
   height="800"
   priority />
 <div class="info">
-  <h1 class="title" nz-typography>{{ manga().attributes.title| mangaTitle }}</h1>
+  <h1 class="title" nz-typography>
+    {{ manga().attributes.title | mangaTitle }}
+  </h1>
   <nz-flex nzWrap="wrap">
     @for (tag of manga().attributes.tags; track tag.id) {
       <app-tag>{{ tag.attributes.name['en'] }}</app-tag>
@@ -62,7 +64,13 @@
   </div>
   <div [appSpace]="28"></div>
   <nz-flex [nzGap]="24">
-    <button nz-button nzSize="large" nzType="primary">Đọc ngay</button>
+    <a
+      nz-button
+      nzSize="large"
+      nzType="primary"
+      [routerLink]="['/chapter', firstChapter()?.id]">
+      Đọc ngay
+    </a>
     <a
       nz-button
       nzSize="large"

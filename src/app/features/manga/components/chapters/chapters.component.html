@@ -35,6 +35,7 @@
       nzSpan="12"
       class="chapterName"
       [routerLink]="['/chapter', chapter.id]"
+      [queryParams]="{ lang: lang() ?? '' }"
       nz-typography>
       {{ chapter | chapterName }}
     </a>

@@ -1,6 +1,5 @@
 import {
   Component,
-  computed,
   DestroyRef,
   effect,
   inject,
@@ -32,7 +31,7 @@ import { ChapterService } from '../../shared/services/chapter/chapter.service';
 import { PaginationService } from '../../shared/services/pagination/pagination.service';
 import { SearchFormComponent } from './components/search-form/search-form.component';
 
-type QueryParams = {
+interface QueryParams {
   title: string;
   status: string;
   sort: string;

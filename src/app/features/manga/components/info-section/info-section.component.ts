@@ -10,7 +10,8 @@ import { MangaTitlePipe } from '../../../../shared/pipes/manga-title/manga-title
 import { TagComponent } from '../../../../shared/components/tag/tag.component';
 import { MangaStatusPipe } from '../../../../shared/pipes/manga-status/manga-status.pipe';
 import { SpaceDirective } from '../../../../shared/directives/space/space.directive';
-import { Manga, MangaStatistic } from '../../../../models/mangadex';
+import { Chapter, Manga, MangaStatistic } from '../../../../models/mangadex';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-info-section',
@@ -28,6 +29,7 @@ import { Manga, MangaStatistic } from '../../../../models/mangadex';
     DecimalPipe,
     NzButtonModule,
     SpaceDirective,
+    RouterLink,
   ],
   templateUrl: './info-section.component.html',
   styleUrl: './info-section.component.scss',
@@ -36,6 +38,7 @@ export class InfoSectionComponent {
   manga = input.required<Manga>();
   statistic = input.required<MangaStatistic>();
   totalChapter = input.required<number>();
+  firstChapter = input<Chapter>();
 
   get mangadexLink() {
     return `https://mangadex.org/title/${this.manga().id}`;

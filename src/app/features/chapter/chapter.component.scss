@@ -17,3 +17,15 @@ h1 {
   display: block;
   margin: 0 auto;
 }
+
+.navigation {
+  display: flex;
+  margin: 52px 0;
+  gap: 32px;
+  justify-content: center;
+}
+
+.chapters {
+  width: 100px;
+  display: block;
+}
