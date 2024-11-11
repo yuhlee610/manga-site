@@ -80,7 +80,7 @@ export class MangaService {
     );
   }
 
-  getMangaAggregate(mangaId: string, lang: 'vi' | 'en') {    
+  getMangaAggregate(mangaId: string, lang: 'vi' | 'en') {
     const qs = buildQueryStringFromOptions({
       translatedLanguage: [lang],
     });

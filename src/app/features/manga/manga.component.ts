@@ -49,7 +49,7 @@ export class MangaComponent {
   statistic = signal<MangaStatistic | undefined>(undefined);
   chapterList = signal<ChapterList | undefined>(undefined);
   firstChapter = signal<Chapter | undefined>(undefined);
-  
+
   totalPage = computed(() => (this.chapterList()?.total ?? 0) / ChapterPerPage);
 
   constructor() {

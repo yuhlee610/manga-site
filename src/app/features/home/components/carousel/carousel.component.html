@@ -30,9 +30,11 @@
           <nz-space>
             <div *nzSpaceItem>
               <span nz-icon nzType="star" nzTheme="fill" class="icon"></span>
-              <span nz-typography>{{
-                statistics()?.[manga.id]?.rating?.average | number: '1.1-1'
-              }}</span>
+              <span nz-typography>
+                {{
+                  statistics()?.[manga.id]?.rating?.average | number: '1.1-1'
+                }}
+              </span>
             </div>
             <div *nzSpaceItem>
               <span nz-icon nzType="bell" nzTheme="fill" class="icon"></span>

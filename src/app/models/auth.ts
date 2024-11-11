@@ -1,4 +1,9 @@
-import { CheckResponse, Login, LoginResponse, LogoutResponse } from './mangadex';
+import {
+  CheckResponse,
+  Login,
+  LoginResponse,
+  LogoutResponse,
+} from './mangadex';
 
 /** Authentication token issued when logging into a user account */
 export interface AuthenticationToken {

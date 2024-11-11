@@ -1,6 +1,10 @@
 <div nz-flex nzJustify="space-between" nzAlign="center">
   <nz-input-group [nzPrefix]="prefixTemplateSearch" class="input">
-    <input nz-input placeholder="Search here" [(ngModel)]="title" (keydown)="submit($event)" />
+    <input
+      nz-input
+      placeholder="Search here"
+      [(ngModel)]="title"
+      (keydown)="submit($event)" />
   </nz-input-group>
   <ul class="links" nz-flex nzGap="48px">
     <li>
@@ -8,22 +12,28 @@
         routerLink="/"
         nz-typography
         routerLinkActive="selected"
-        [routerLinkActiveOptions]="{ exact: true }"
-        >Trang chủ</a
-      >
+        [routerLinkActiveOptions]="{ exact: true }">
+        Trang chủ
+      </a>
     </li>
     <li>
-      <a routerLink="/my-list" nz-typography routerLinkActive="selected">Tủ truyện</a>
+      <a routerLink="/my-list" nz-typography routerLinkActive="selected">
+        Tủ truyện
+      </a>
     </li>
     <li>
-      <a routerLink="/history" nz-typography routerLinkActive="selected">Lịch sử</a>
+      <a routerLink="/history" nz-typography routerLinkActive="selected">
+        Lịch sử
+      </a>
     </li>
     <li>
-      <a routerLink="/popular" nz-typography routerLinkActive="selected">Phổ biến</a>
+      <a routerLink="/popular" nz-typography routerLinkActive="selected">
+        Phổ biến
+      </a>
     </li>
   </ul>
 </div>
 
-<ng-template #prefixTemplateSearch
-  ><span nz-icon nzType="search" nzTheme="outline"></span
-></ng-template>
+<ng-template #prefixTemplateSearch>
+  <span nz-icon nzType="search" nzTheme="outline"></span>
+</ng-template>

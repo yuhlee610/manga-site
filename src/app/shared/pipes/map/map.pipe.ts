@@ -8,6 +8,6 @@ import _ from 'lodash';
 })
 export class MapPipe implements PipeTransform {
   transform(value: Relationship | undefined, key: string) {
-    return _.get(value, key) ?? "";
+    return _.get(value, key) ?? '';
   }
 }

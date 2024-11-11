@@ -37,7 +37,7 @@ interface QueryParams {
   sort: string;
   publicationDemographic: string;
   includedTags: string[];
-};
+}
 
 @Component({
   selector: 'app-search',
@@ -141,7 +141,8 @@ export class SearchComponent implements OnInit {
   private formatQueryParams(params: Record<string, string | string[]>) {
     return _.omitBy(params, value => {
       if (typeof value === 'string') return value === '';
-      if (Array.isArray(value) && value.length === 1 && value[0] === '') return true;
+      if (Array.isArray(value) && value.length === 1 && value[0] === '')
+        return true;
 
       return false;
     });

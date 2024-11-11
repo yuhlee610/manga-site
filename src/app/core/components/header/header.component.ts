@@ -27,7 +27,7 @@ export class HeaderComponent {
 
   submit(event: KeyboardEvent) {
     if (event.key !== 'Enter' || this.title() === '') return;
-    
+
     this.router.navigate(['/search'], {
       queryParams: {
         title: this.title(),

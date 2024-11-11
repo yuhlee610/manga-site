@@ -1,5 +1,5 @@
-<a [routerLink]="['/manga', manga().id]" class="thumbnail"
-  ><img
+<a [routerLink]="['/manga', manga().id]" class="thumbnail">
+  <img
     [src]="manga() | coverArt"
     [alt]="manga() | imageAlt"
     class="thumbnail"
@@ -7,9 +7,9 @@
   <div class="statistic">
     <div>
       <span nz-icon nzType="star" nzTheme="fill" class="icon"></span>
-      <span nz-typography>{{
-        statistic()?.rating?.average ?? 0 | number: '1.1-1'
-      }}</span>
+      <span nz-typography>
+        {{ statistic()?.rating?.average ?? 0 | number: '1.1-1' }}
+      </span>
     </div>
 
     <div>
@@ -22,10 +22,10 @@
 <div [appSpace]="12"></div>
 <a [routerLink]="['/manga', manga().id]">
   <h3 nz-typography class="title">
-    {{ manga().attributes.title| mangaTitle: 8 }}
+    {{ manga().attributes.title | mangaTitle: 8 }}
   </h3>
 </a>
 <div class="chapterInfo">
   <p nz-typography>Chương {{ latestChapter()?.attributes?.chapter }}</p>
-  <p nz-typography>{{ latestChapter()?.attributes?.updatedAt| updatedAt }}</p>
+  <p nz-typography>{{ latestChapter()?.attributes?.updatedAt | updatedAt }}</p>
 </div>

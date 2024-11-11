@@ -35,7 +35,9 @@ const transformArrayForQueryString = function (name: string, array?: string[]) {
  * @returns {string} The query string, including the starting '?' character
  */
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-export const buildQueryStringFromOptions = function (options?: Record<string, any>) {
+export const buildQueryStringFromOptions = function (
+  options?: Record<string, any>
+) {
   const queryParams = [];
 
   if (options === undefined || Object.keys(options).length === 0) {
@@ -49,7 +51,9 @@ export const buildQueryStringFromOptions = function (options?: Record<string, an
     } else if (options[key] instanceof Date) {
       // /** @type {Date} */
       const d = options[key];
-      queryParams.push(`${key}=${d.toISOString().substring(0, d.toISOString().indexOf('.'))}`);
+      queryParams.push(
+        `${key}=${d.toISOString().substring(0, d.toISOString().indexOf('.'))}`
+      );
     } else if (key === 'order') {
       const order = options[key];
 

@@ -7,14 +7,14 @@
     width="60" />
   <div>
     <h3 nz-typography class="title">
-      {{ manga().attributes.title| mangaTitle }}
+      {{ manga().attributes.title | mangaTitle }}
     </h3>
     <nz-space>
       <div *nzSpaceItem nz-flex [nzGap]="6">
         <span nz-icon nzType="star" nzTheme="fill" class="icon"></span>
-        <span nz-typography class="statistic">{{
-          statistic()?.rating?.average | number: '1.1-1'
-        }}</span>
+        <span nz-typography class="statistic">
+          {{ statistic()?.rating?.average | number: '1.1-1' }}
+        </span>
       </div>
       <div *nzSpaceItem nz-flex [nzGap]="6">
         <span nz-icon nzType="bell" nzTheme="fill" class="icon"></span>

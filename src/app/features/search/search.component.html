@@ -23,12 +23,12 @@
     </div>
 
     @if (mangaList) {
-    <nz-pagination
-      class="pagination"
-      [nzPageIndex]="page()"
-      [nzTotal]="mangaList.total | paginationTotalItems"
-      (nzPageIndexChange)="changePage($event)"
-      [nzPageSize]="pageSize"></nz-pagination>
-  }
+      <nz-pagination
+        class="pagination"
+        [nzPageIndex]="page()"
+        [nzTotal]="mangaList.total | paginationTotalItems"
+        (nzPageIndexChange)="changePage($event)"
+        [nzPageSize]="pageSize"></nz-pagination>
+    }
   </ng-container>
 }

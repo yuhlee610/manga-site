@@ -2,7 +2,12 @@
  * TYPE DEFINITIONS
  *******************/
 
-import { CoverEdit, CoverList, CoverResponse, ReferenceExpansionCoverArt } from './mangadex';
+import {
+  CoverEdit,
+  CoverList,
+  CoverResponse,
+  ReferenceExpansionCoverArt,
+} from './mangadex';
 import { Order } from './static';
 
 /** Order object for GetCoverRequestOptions */

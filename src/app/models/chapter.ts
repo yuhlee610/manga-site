@@ -2,7 +2,12 @@
  * TYPE DEFINITIONS
  *******************/
 
-import { ChapterEdit, ChapterList, ChapterResponse, ReferenceExpansionChapter } from './mangadex';
+import {
+  ChapterEdit,
+  ChapterList,
+  ChapterResponse,
+  ReferenceExpansionChapter,
+} from './mangadex';
 import { MangaContentRating, Order } from './static';
 
 /** Order object for GetChapterRequestOptions */
