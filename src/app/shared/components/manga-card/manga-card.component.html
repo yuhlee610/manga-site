@@ -26,6 +26,8 @@
   </h3>
 </a>
 <div class="chapterInfo">
-  <p nz-typography>Chương {{ latestChapter()?.attributes?.chapter }}</p>
+  <a [routerLink]="['/chapter', latestChapter()?.id]">
+    <p nz-typography>Chương {{ latestChapter()?.attributes?.chapter }}</p>
+  </a>
   <p nz-typography>{{ latestChapter()?.attributes?.updatedAt | updatedAt }}</p>
 </div>

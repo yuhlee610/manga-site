@@ -23,6 +23,7 @@ import { UpdatedAtPipe } from '../../pipes/updated-at/updated-at.pipe';
     DecimalPipe,
     NzIconModule,
     UpdatedAtPipe,
+    RouterLink,
   ],
   templateUrl: './manga-card.component.html',
   styleUrl: './manga-card.component.scss',
