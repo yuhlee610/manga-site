@@ -5,7 +5,10 @@
     [firstChapter]="firstChapter()"
     [totalChapter]="chapterList()!.total"></app-info-section>
 
-  <app-chapters [chapters]="chapterList()!.data" [lang]="lang()"></app-chapters>
+  <app-chapters
+    [chapters]="chapterList()!.data"
+    [lang]="lang()"
+    (changeLang)="changeLang()"></app-chapters>
 
   @if (chapterList() && totalPage() > 1) {
     <nz-pagination

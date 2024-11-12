@@ -5,6 +5,7 @@ import {
   effect,
   inject,
   input,
+  output,
   signal,
 } from '@angular/core';
 import {
@@ -21,6 +22,7 @@ import { ChaptersComponent } from './components/chapters/chapters.component';
 import { MangaService } from '../../shared/services/manga/manga.service';
 import { StatisticService } from '../../shared/services/statistic/statistic.service';
 import { PaginationService } from '../../shared/services/pagination/pagination.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 const ChapterPerPage = 50;
 
@@ -36,6 +38,8 @@ export class MangaComponent {
   private statisticService = inject(StatisticService);
   private destroyRef = inject(DestroyRef);
   private paginationService = inject(PaginationService);
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
 
   mangaId = input.required<string>();
   page = input.required({
@@ -44,6 +48,8 @@ export class MangaComponent {
   lang = input.required({
     transform: (value: string) => (value ? value : 'vi'),
   });
+  preview = input(false);
+  closeDrawer = output();
 
   manga = signal<Manga | undefined>(undefined);
   statistic = signal<MangaStatistic | undefined>(undefined);
@@ -118,6 +124,39 @@ export class MangaComponent {
   }
 
   changePage(pageIndex: number) {
+    if (this.preview()) {
+      this.router
+        .navigate(['/manga', this.mangaId()], {
+          queryParams: { page: pageIndex },
+        })
+        .then(() => {
+          this.closeDrawer.emit();
+        });
+      return;
+    }
     this.paginationService.changePage(pageIndex);
+  }
+
+  changeLang() {
+    const params = {
+      queryParams: { lang: this.lang() === 'vi' ? 'en' : 'vi' },
+    };
+    
+    if (this.preview()) {
+      this.router
+        .navigate(['/manga', this.mangaId()], {
+          ...params,
+        })
+        .then(() => {
+          this.closeDrawer.emit();
+        });
+      return;
+    }
+    this.router.navigate(['./'], {
+      ...params,
+      relativeTo: this.activatedRoute,
+      queryParamsHandling: 'merge',
+      onSameUrlNavigation: 'reload',
+    });
   }
 }

@@ -43,3 +43,15 @@ a {
     font-size: 14px;
   }
 }
+
+.preview {
+  background-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  padding: 8px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}

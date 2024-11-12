@@ -1,4 +1,12 @@
-import { Component, effect, inject, input } from '@angular/core';
+import {
+  Component,
+  effect,
+  inject,
+  input,
+  signal,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import {
   Chapter,
@@ -25,6 +33,12 @@ import { StatisticService } from '../../shared/services/statistic/statistic.serv
 import { MangaService } from '../../shared/services/manga/manga.service';
 import { ChapterService } from '../../shared/services/chapter/chapter.service';
 import { PaginationService } from '../../shared/services/pagination/pagination.service';
+import { MangaComponent } from '../manga/manga.component';
+import {
+  NzDrawerModule,
+  NzDrawerRef,
+  NzDrawerService,
+} from 'ng-zorro-antd/drawer';
 
 const MangaPerPage = 50;
 
@@ -47,6 +61,8 @@ const MangaPerPage = 50;
     AsyncPipe,
     CommonModule,
     PaginationTotalItemsPipe,
+    MangaComponent,
+    NzDrawerModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -57,14 +73,28 @@ export class HomeComponent {
   private mangaService = inject(MangaService);
   private chapterService = inject(ChapterService);
   private paginationService = inject(PaginationService);
+  private drawerService = inject(NzDrawerService);
+  @ViewChild('drawerTemplate', { static: false }) drawerTemplate?: TemplateRef<{
+    $implicit: { value: string };
+    drawerRef: NzDrawerRef<string>;
+  }>;
 
   page = input.required({
     transform: (value: string) => (value ? Number.parseInt(value) : 1),
   });
+  previewMangaId = signal('');
 
   latestMangaList$?: Observable<MangaList>;
   latestMangaStatistics$?: Observable<Record<string, MangaStatistic>>;
   latestChapters$?: Observable<Dictionary<Chapter>>;
+  drawerRef?: NzDrawerRef<
+    {
+      mangaId: string;
+      page: string;
+      lang: string;
+    },
+    unknown
+  >;
 
   featureMangaList = toSignal(
     this.activatedRoute.data.pipe(
@@ -128,6 +158,22 @@ export class HomeComponent {
 
   changePage(pageIndex: number) {
     this.paginationService.changePage(pageIndex);
+  }
+
+  previewManga(mangaId: string) {
+    this.drawerRef = this.drawerService.create({
+      nzWidth: '2000px',
+      nzContent: this.drawerTemplate,
+      nzContentParams: {
+        mangaId: mangaId,
+        page: '1',
+        lang: 'vi',
+      },
+    });
+  }
+
+  closeDrawer() {
+    this.drawerRef?.close();
   }
 }
 

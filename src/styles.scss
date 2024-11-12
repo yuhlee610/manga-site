@@ -28,3 +28,16 @@ img {
 .ant-select-item-option-content {
   letter-spacing: 0.8px;
 }
+
+.ant-drawer-body,
+.ant-drawer-header {
+  background-color: #1a1a1a;
+  border-color: #1a1a1a;
+
+}
+
+.ant-drawer-header {
+  [nz-icon] {
+    color: #fff;
+  }
+}

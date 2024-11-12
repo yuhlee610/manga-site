@@ -16,6 +16,7 @@
               [latestChapter]="
                 latestChapters?.[manga.attributes.latestUploadedChapter]
               "
+              (preview)="previewManga($event)"
               [statistic]="mangaStatistics?.[manga.id]"></app-manga-card>
           }
         </ng-container>
@@ -32,3 +33,12 @@
     }
   </ng-container>
 }
+
+<ng-template #drawerTemplate let-data>
+  <app-manga
+    [mangaId]="data?.mangaId"
+    [page]="data?.page"
+    [lang]="data?.lang"
+    [preview]="true"
+    (closeDrawer)="closeDrawer()"></app-manga>
+</ng-template>

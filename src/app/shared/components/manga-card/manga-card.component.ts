@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Chapter, Manga, MangaStatistic } from '../../../models/mangadex';
 import { RouterLink } from '@angular/router';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
@@ -32,4 +32,11 @@ export class MangaCardComponent {
   manga = input.required<Manga>();
   statistic = input<MangaStatistic>();
   latestChapter = input<Chapter>();
+  preview = output<string>();
+
+  handlePreview(event: Event) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.preview.emit(this.manga().id);
+  }
 }

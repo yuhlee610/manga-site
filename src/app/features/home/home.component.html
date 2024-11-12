@@ -35,7 +35,8 @@
               [latestChapter]="
                 latestChapters?.[manga.attributes.latestUploadedChapter]
               "
-              [statistic]="latestMangaStatistics?.[manga.id]"></app-manga-card>
+              [statistic]="latestMangaStatistics?.[manga.id]"
+              (preview)="previewManga($event)"></app-manga-card>
           }
         </ng-container>
       }
@@ -51,3 +52,12 @@
       [nzPageSize]="pageSize"></nz-pagination>
   }
 }
+
+<ng-template #drawerTemplate let-data>
+  <app-manga
+    [mangaId]="data?.mangaId"
+    [page]="data?.page"
+    [lang]="data?.lang"
+    [preview]="true"
+    (closeDrawer)="closeDrawer()"></app-manga>
+</ng-template>

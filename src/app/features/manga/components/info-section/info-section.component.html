@@ -21,7 +21,7 @@
     <div class="group">
       <div>
         <span nz-icon nzType="user" nzTheme="outline" class="icon"></span>
-        <span>Tác giả:</span>
+        <span nz-typography>Tác giả:</span>
       </div>
       <p>{{ manga().relationships[0].attributes.name }}</p>
     </div>
@@ -39,7 +39,7 @@
     <div class="group">
       <div>
         <span nz-icon nzType="star" nzTheme="fill" class="icon"></span>
-        <span>Rating:</span>
+        <span nz-typography>Rating:</span>
       </div>
       <p>{{ statistic().rating.average | number: '1.1-1' }}</p>
     </div>

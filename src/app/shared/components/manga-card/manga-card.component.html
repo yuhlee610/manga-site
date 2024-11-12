@@ -4,6 +4,9 @@
     [alt]="manga() | imageAlt"
     class="thumbnail"
     loading="lazy" />
+  <button class="preview" (click)="handlePreview($event)">
+    <span nz-icon nzType="eye" nzTheme="outline"></span>
+  </button>
   <div class="statistic">
     <div>
       <span nz-icon nzType="star" nzTheme="fill" class="icon"></span>

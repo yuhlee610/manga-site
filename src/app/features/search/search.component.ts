@@ -6,6 +6,8 @@ import {
   input,
   OnInit,
   signal,
+  TemplateRef,
+  ViewChild,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import _ from 'lodash';
@@ -30,6 +32,12 @@ import { StatisticService } from '../../shared/services/statistic/statistic.serv
 import { ChapterService } from '../../shared/services/chapter/chapter.service';
 import { PaginationService } from '../../shared/services/pagination/pagination.service';
 import { SearchFormComponent } from './components/search-form/search-form.component';
+import { MangaComponent } from "../manga/manga.component";
+import {
+  NzDrawerModule,
+  NzDrawerRef,
+  NzDrawerService,
+} from 'ng-zorro-antd/drawer';
 
 interface QueryParams {
   title: string;
@@ -50,11 +58,18 @@ interface QueryParams {
     NzPaginationModule,
     SpaceDirective,
     PaginationTotalItemsPipe,
-  ],
+    MangaComponent,
+    NzDrawerModule,
+],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
 })
 export class SearchComponent implements OnInit {
+  private drawerService = inject(NzDrawerService);
+  @ViewChild('drawerTemplate', { static: false }) drawerTemplate?: TemplateRef<{
+    $implicit: { value: string };
+    drawerRef: NzDrawerRef<string>;
+  }>;
   private tagService = inject(TagService);
   private mangaService = inject(MangaService);
   private router = inject(Router);
@@ -63,7 +78,14 @@ export class SearchComponent implements OnInit {
   private chapterService = inject(ChapterService);
   private paginationService = inject(PaginationService);
   private destroyRef = inject(DestroyRef);
-
+  drawerRef?: NzDrawerRef<
+  {
+    mangaId: string;
+    page: string;
+    lang: string;
+  },
+  unknown
+>;
   pageSize = 30;
 
   initialValues = signal<QueryParams | undefined>(undefined);
@@ -158,5 +180,21 @@ export class SearchComponent implements OnInit {
 
   changePage(pageIndex: number) {
     this.paginationService.changePage(pageIndex);
+  }
+
+  previewManga(mangaId: string) {
+    this.drawerRef = this.drawerService.create({
+      nzWidth: '2000px',
+      nzContent: this.drawerTemplate,
+      nzContentParams: {
+        mangaId: mangaId,
+        page: '1',
+        lang: 'vi',
+      },
+    });
+  }
+
+  closeDrawer() {
+    this.drawerRef?.close();
   }
 }
