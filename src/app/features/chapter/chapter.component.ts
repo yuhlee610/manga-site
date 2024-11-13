@@ -1,19 +1,18 @@
 import {
   Component,
+  computed,
   DestroyRef,
   effect,
   HostListener,
   inject,
   input,
-  OnInit,
   signal,
 } from '@angular/core';
 import { ChapterService } from '../../shared/services/chapter/chapter.service';
-import { map, Observable, shareReplay, switchMap } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 import { GetAtHomeServerChapterIdResponse } from '../../models/atHome';
 import { AsyncPipe } from '@angular/common';
 import { ChapterImagePipe } from '../../shared/pipes/chapter-image/chapter-image.pipe';
-import { GetChapterIdResponse } from '../../models/chapter';
 import { MangaService } from '../../shared/services/manga/manga.service';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { MangaTitlePipe } from '../../shared/pipes/manga-title/manga-title.pipe';
@@ -23,11 +22,13 @@ import { RelationshipPipe } from '../../shared/pipes/relationship/relationship.p
 import { MapPipe } from '../../shared/pipes/map/map.pipe';
 import {
   AggregateChapter,
+  ChapterResponse,
   GetMangaIdAggregateResponse,
 } from '../../models/mangadex';
 import { FormsModule } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { LocalStorageService } from '../../shared/services/local-storage/local-storage.service';
 
 @Component({
   selector: 'app-chapter',
@@ -48,29 +49,32 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   templateUrl: './chapter.component.html',
   styleUrl: './chapter.component.scss',
 })
-export class ChapterComponent implements OnInit {
+export class ChapterComponent {
   private chapterService = inject(ChapterService);
   private mangaService = inject(MangaService);
   private destroyRef = inject(DestroyRef);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
+  private localStorageService = inject(LocalStorageService);
 
   chapterId = input.required<string>();
   lang = input<'vi' | 'en'>();
 
   content$?: Observable<GetAtHomeServerChapterIdResponse>;
-  chapter$?: Observable<GetChapterIdResponse>;
 
   chapterList = signal<{ chapter: string; id: string }[]>([]);
+  chapter = signal<ChapterResponse | undefined>(undefined);
+  manga = computed(() =>
+    this.chapter()?.data.relationships.find(
+      relationship => relationship.type === 'manga'
+    )
+  );
+  mangaId = computed(() => this.manga()?.id ?? '');
 
   constructor() {
     effect(() => {
       this.fetchData(this.chapterId());
     });
-  }
-
-  ngOnInit(): void {
-    this.fetchData(this.chapterId());
   }
 
   parseAggregate(
@@ -84,27 +88,36 @@ export class ChapterComponent implements OnInit {
     }, {});
   }
 
+  findMangaRelationshipId(chapter: ChapterResponse) {
+    return chapter.data.relationships.find(({ type }) => type === 'manga')?.id;
+  }
+
   private fetchData(chapterId: string) {
     this.content$ = this.chapterService.getChapterContent(chapterId);
-    this.chapter$ = this.chapterService
+    this.chapterService
       .getChapter(chapterId)
-      .pipe(shareReplay(1));
-    this.chapter$
       .pipe(
-        map(chapter => {
-          const mangaRelationship = chapter.data.relationships.find(
-            relationship => relationship.type === 'manga'
-          );
-
-          return mangaRelationship?.id ?? '';
-        }),
-        switchMap(mangaId =>
-          this.mangaService.getMangaAggregate(mangaId, this.lang() ?? 'vi')
+        switchMap(chapter =>
+          this.mangaService
+            .getMangaAggregate(
+              this.findMangaRelationshipId(chapter) as string,
+              this.lang() ?? 'vi'
+            )
+            .pipe(
+              map(aggregate => ({
+                aggregate: Object.values(this.parseAggregate(aggregate)),
+                chapter,
+              }))
+            )
         ),
-        takeUntilDestroyed(this.destroyRef),
-        map(aggregate => Object.values(this.parseAggregate(aggregate)))
+        takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(data => this.chapterList.set(data));
+      .subscribe({
+        next: response => {
+          this.chapterList.set(response.aggregate);
+          this.chapter.set(response.chapter);
+        },
+      });
   }
 
   prev() {
@@ -114,6 +127,12 @@ export class ChapterComponent implements OnInit {
 
     if (currentChapterIndex === 0) return;
 
+    const newChapter = this.chapterList().at(currentChapterIndex + 1)
+      ?.id as string;
+    this.localStorageService.setHistory(
+      this.findMangaRelationshipId(this.chapter() as ChapterResponse) as string,
+      newChapter
+    );
     this.router.navigate(
       ['/chapter', this.chapterList().at(currentChapterIndex - 1)?.id],
       {
@@ -134,17 +153,20 @@ export class ChapterComponent implements OnInit {
 
     if (currentChapterIndex === this.chapterList().length - 1) return;
 
-    this.router.navigate(
-      ['/chapter', this.chapterList().at(currentChapterIndex + 1)?.id],
-      {
-        relativeTo: this.activatedRoute,
-        queryParamsHandling: 'merge',
-        onSameUrlNavigation: 'reload',
-        queryParams: {
-          lang: this.lang(),
-        },
-      }
+    const newChapter = this.chapterList().at(currentChapterIndex + 1)
+      ?.id as string;
+    this.localStorageService.setHistory(
+      this.findMangaRelationshipId(this.chapter() as ChapterResponse) as string,
+      newChapter
     );
+    this.router.navigate(['/chapter', newChapter], {
+      relativeTo: this.activatedRoute,
+      queryParamsHandling: 'merge',
+      onSameUrlNavigation: 'reload',
+      queryParams: {
+        lang: this.lang(),
+      },
+    });
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -155,5 +177,27 @@ export class ChapterComponent implements OnInit {
     if (event.key === 'ArrowLeft') {
       this.prev();
     }
+  }
+
+  trackHistory(chapterId: string) {
+    this.localStorageService.setHistory(
+      this.findMangaRelationshipId(this.chapter() as ChapterResponse) as string,
+      chapterId
+    );
+  }
+
+  changeChapter(chapterId: string) {
+    this.localStorageService.setHistory(
+      this.findMangaRelationshipId(this.chapter() as ChapterResponse) as string,
+      chapterId
+    );
+    this.router.navigate(['/chapter', chapterId], {
+      relativeTo: this.activatedRoute,
+      queryParamsHandling: 'merge',
+      onSameUrlNavigation: 'reload',
+      queryParams: {
+        lang: this.lang(),
+      },
+    });
   }
 }

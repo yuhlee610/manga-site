@@ -39,10 +39,16 @@ export class ChaptersComponent {
   isVietNamFlag = computed(() => (this.lang() === 'en' ? false : true));
   changeLang = output();
 
+  trackHistory = output<string>();
+
   VNFlag = this.sanitizer.bypassSecurityTrustHtml(VN);
   GBFlag = this.sanitizer.bypassSecurityTrustHtml(GB);
 
-  click() {
+  track(chapterId: string) {
+    this.trackHistory.emit(chapterId);
+  }
+
+  switchLanguage() {
     this.changeLang.emit();
   }
 }

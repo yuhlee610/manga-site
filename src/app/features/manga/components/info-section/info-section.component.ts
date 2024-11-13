@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { DecimalPipe, NgOptimizedImage } from '@angular/common';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
@@ -40,7 +40,15 @@ export class InfoSectionComponent {
   totalChapter = input.required<number>();
   firstChapter = input<Chapter>();
 
+  trackHistory = output<string>();
+
   get mangadexLink() {
     return `https://mangadex.org/title/${this.manga().id}`;
+  }
+
+  track() {
+    if (this.firstChapter()?.id) {
+      this.trackHistory.emit(this.firstChapter()?.id as string);
+    }
   }
 }

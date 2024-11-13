@@ -9,7 +9,7 @@
   </nz-flex>
   <nz-flex nzGap="8px" nzAlign="center">
     <div class="flag" [innerHTML]="GBFlag"></div>
-    <nz-switch [ngModel]="isVietNamFlag()" (click)="click()"></nz-switch>
+    <nz-switch [ngModel]="isVietNamFlag()" (click)="switchLanguage()"></nz-switch>
     <div class="flag" [innerHTML]="VNFlag"></div>
   </nz-flex>
 </nz-flex>
@@ -34,6 +34,7 @@
       nz-col
       nzSpan="12"
       class="chapterName"
+      (click)="track(chapter.id)"
       [routerLink]="['/chapter', chapter.id]"
       [queryParams]="{ lang: lang() ?? '' }"
       nz-typography>

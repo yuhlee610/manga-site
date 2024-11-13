@@ -23,6 +23,7 @@ import { MangaService } from '../../shared/services/manga/manga.service';
 import { StatisticService } from '../../shared/services/statistic/statistic.service';
 import { PaginationService } from '../../shared/services/pagination/pagination.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LocalStorageService } from '../../shared/services/local-storage/local-storage.service';
 
 const ChapterPerPage = 50;
 
@@ -40,6 +41,7 @@ export class MangaComponent {
   private paginationService = inject(PaginationService);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
+  private localStorageService = inject(LocalStorageService);
 
   mangaId = input.required<string>();
   page = input.required({
@@ -158,5 +160,10 @@ export class MangaComponent {
       queryParamsHandling: 'merge',
       onSameUrlNavigation: 'reload',
     });
+  }
+
+  trackHistory(chapterId: string) {
+    const mangaId = this.mangaId();
+    this.localStorageService.setHistory(mangaId, chapterId);
   }
 }

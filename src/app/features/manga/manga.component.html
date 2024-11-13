@@ -2,11 +2,13 @@
   <app-info-section
     [manga]="manga()!"
     [statistic]="statistic()!"
+    (trackHistory)="trackHistory($event)"
     [firstChapter]="firstChapter()"
     [totalChapter]="chapterList()!.total"></app-info-section>
 
   <app-chapters
     [chapters]="chapterList()!.data"
+    (trackHistory)="trackHistory($event)"
     [lang]="lang()"
     (changeLang)="changeLang()"></app-chapters>
 

@@ -1,5 +1,5 @@
-@if (chapter$ | async; as chapter) {
-  @let manga = chapter.data.relationships | relationship: 'manga';
+@if (chapter()) {
+  @let manga = chapter()!.data.relationships | relationship: 'manga';
   <a [routerLink]="['/manga', manga | map: 'id']">
     <h1 nz-typography>
       {{ manga | map: 'attributes.title' | mangaTitle }}
@@ -27,7 +27,7 @@
       [disabled]="chapterList()[0].id === chapterId()">
       Chương trước
     </button>
-    <nz-select [ngModel]="chapterId()" class="chapters" nzSize="large">
+    <nz-select [ngModel]="chapterId()" (ngModelChange)="changeChapter($event)" class="chapters" nzSize="large">
       @for (chapter of chapterList(); track chapter.id) {
         <nz-option
           [nzValue]="chapter.id"

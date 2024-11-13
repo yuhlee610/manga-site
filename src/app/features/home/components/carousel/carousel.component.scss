@@ -25,6 +25,11 @@
   margin-top: 36px;
   font-size: 18px;
   white-space: pre-line;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 7;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
 }
 
 h2 {
