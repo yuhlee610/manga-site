@@ -9,7 +9,9 @@
   </nz-flex>
   <nz-flex nzGap="8px" nzAlign="center">
     <div class="flag" [innerHTML]="GBFlag"></div>
-    <nz-switch [ngModel]="isVietNamFlag()" (click)="switchLanguage()"></nz-switch>
+    <nz-switch
+      [ngModel]="isVietNamFlag()"
+      (click)="switchLanguage()"></nz-switch>
     <div class="flag" [innerHTML]="VNFlag"></div>
   </nz-flex>
 </nz-flex>

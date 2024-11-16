@@ -32,7 +32,7 @@ import { StatisticService } from '../../shared/services/statistic/statistic.serv
 import { ChapterService } from '../../shared/services/chapter/chapter.service';
 import { PaginationService } from '../../shared/services/pagination/pagination.service';
 import { SearchFormComponent } from './components/search-form/search-form.component';
-import { MangaComponent } from "../manga/manga.component";
+import { MangaComponent } from '../manga/manga.component';
 import {
   NzDrawerModule,
   NzDrawerRef,
@@ -60,7 +60,7 @@ interface QueryParams {
     PaginationTotalItemsPipe,
     MangaComponent,
     NzDrawerModule,
-],
+  ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
 })
@@ -79,13 +79,13 @@ export class SearchComponent implements OnInit {
   private paginationService = inject(PaginationService);
   private destroyRef = inject(DestroyRef);
   drawerRef?: NzDrawerRef<
-  {
-    mangaId: string;
-    page: string;
-    lang: string;
-  },
-  unknown
->;
+    {
+      mangaId: string;
+      page: string;
+      lang: string;
+    },
+    unknown
+  >;
   pageSize = 30;
 
   initialValues = signal<QueryParams | undefined>(undefined);

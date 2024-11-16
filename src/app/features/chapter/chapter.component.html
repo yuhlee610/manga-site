@@ -27,7 +27,11 @@
       [disabled]="chapterList()[0].id === chapterId()">
       Chương trước
     </button>
-    <nz-select [ngModel]="chapterId()" (ngModelChange)="changeChapter($event)" class="chapters" nzSize="large">
+    <nz-select
+      [ngModel]="chapterId()"
+      (ngModelChange)="changeChapter($event)"
+      class="chapters"
+      nzSize="large">
       @for (chapter of chapterList(); track chapter.id) {
         <nz-option
           [nzValue]="chapter.id"

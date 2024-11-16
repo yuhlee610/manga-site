@@ -1,6 +1,11 @@
 @let mangaData = manga()!;
 <a nz-typography [routerLink]="['/manga', mangaData.id]">
-  <img [ngSrc]="mangaData | coverArt" [alt]="mangaData | imageAlt" width="160" height="200" priority />
+  <img
+    [ngSrc]="mangaData | coverArt"
+    [alt]="mangaData | imageAlt"
+    width="160"
+    height="200"
+    priority />
 </a>
 <nz-flex [nzVertical]="true" [nzJustify]="'space-between'">
   <div>
@@ -15,4 +20,3 @@
     Ngày đọc {{ chapter()?.readAt | date: 'shortDate' }}
   </p>
 </nz-flex>
-

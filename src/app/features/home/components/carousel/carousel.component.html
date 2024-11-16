@@ -1,4 +1,8 @@
-<nz-carousel nzEffect="scrollx" class="carousel" nzAutoPlay="true" [nzLoop]="true">
+<nz-carousel
+  nzEffect="scrollx"
+  class="carousel"
+  nzAutoPlay="true"
+  [nzLoop]="true">
   @for (manga of mangaList(); track manga.id) {
     <div nz-carousel-content class="featureCard">
       <img
@@ -24,7 +28,9 @@
           </a>
           <nz-flex nzWrap="wrap">
             @for (tag of manga.attributes.tags; track tag.id) {
-              <app-tag [tagId]="tag.id">{{ tag.attributes.name['en'] }}</app-tag>
+              <app-tag [tagId]="tag.id">
+                {{ tag.attributes.name['en'] }}
+              </app-tag>
             }
           </nz-flex>
           <nz-space>
