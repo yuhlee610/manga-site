@@ -23,6 +23,13 @@ import {
 export class MangaService {
   private httpClient = inject(HttpClient);
 
+  fetchHistoryOrFavoriteManga(queryParams: GetSearchMangaRequestOptions) {
+    return this.getMangaList({
+      includes: [Includes.COVER_ART],
+      ...queryParams,
+    });
+  }
+
   searchManga(queryParams: GetSearchMangaRequestOptions) {
     return this.getMangaList({
       availableTranslatedLanguage: DefaultTranslatedLanguages,

@@ -28,7 +28,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { LocalStorageService } from '../../shared/services/local-storage/local-storage.service';
+import { HistoryService } from '../../shared/services/history/history.service';
 
 @Component({
   selector: 'app-chapter',
@@ -55,7 +55,7 @@ export class ChapterComponent {
   private destroyRef = inject(DestroyRef);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
-  private localStorageService = inject(LocalStorageService);
+  private historyService = inject(HistoryService);
 
   chapterId = input.required<string>();
   lang = input<'vi' | 'en'>();
@@ -127,23 +127,19 @@ export class ChapterComponent {
 
     if (currentChapterIndex === 0) return;
 
-    const newChapter = this.chapterList().at(currentChapterIndex + 1)
-      ?.id as string;
-    this.localStorageService.setHistory(
+    const newChapter = this.chapterList().at(currentChapterIndex - 1)!;
+    this.historyService.setHistory(
       this.findMangaRelationshipId(this.chapter() as ChapterResponse) as string,
       newChapter
     );
-    this.router.navigate(
-      ['/chapter', this.chapterList().at(currentChapterIndex - 1)?.id],
-      {
-        relativeTo: this.activatedRoute,
-        queryParamsHandling: 'merge',
-        onSameUrlNavigation: 'reload',
-        queryParams: {
-          lang: this.lang(),
-        },
-      }
-    );
+    this.router.navigate(['/chapter', newChapter.id], {
+      relativeTo: this.activatedRoute,
+      queryParamsHandling: 'merge',
+      onSameUrlNavigation: 'reload',
+      queryParams: {
+        lang: this.lang(),
+      },
+    });
   }
 
   next() {
@@ -153,13 +149,12 @@ export class ChapterComponent {
 
     if (currentChapterIndex === this.chapterList().length - 1) return;
 
-    const newChapter = this.chapterList().at(currentChapterIndex + 1)
-      ?.id as string;
-    this.localStorageService.setHistory(
+    const newChapter = this.chapterList().at(currentChapterIndex + 1)!;
+    this.historyService.setHistory(
       this.findMangaRelationshipId(this.chapter() as ChapterResponse) as string,
       newChapter
     );
-    this.router.navigate(['/chapter', newChapter], {
+    this.router.navigate(['/chapter', newChapter.id], {
       relativeTo: this.activatedRoute,
       queryParamsHandling: 'merge',
       onSameUrlNavigation: 'reload',
@@ -179,17 +174,14 @@ export class ChapterComponent {
     }
   }
 
-  trackHistory(chapterId: string) {
-    this.localStorageService.setHistory(
-      this.findMangaRelationshipId(this.chapter() as ChapterResponse) as string,
-      chapterId
-    );
-  }
-
   changeChapter(chapterId: string) {
-    this.localStorageService.setHistory(
+    const chapter = this.chapterList().find(c => c.id === chapterId);
+
+    if (!chapter) return;
+
+    this.historyService.setHistory(
       this.findMangaRelationshipId(this.chapter() as ChapterResponse) as string,
-      chapterId
+      chapter
     );
     this.router.navigate(['/chapter', chapterId], {
       relativeTo: this.activatedRoute,

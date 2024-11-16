@@ -1,0 +1,18 @@
+@let mangaData = manga()!;
+<a nz-typography [routerLink]="['/manga', mangaData.id]">
+  <img [ngSrc]="mangaData | coverArt" [alt]="mangaData | imageAlt" width="160" height="200" priority />
+</a>
+<nz-flex [nzVertical]="true" [nzJustify]="'space-between'">
+  <div>
+    <a nz-typography class="title" [routerLink]="['/manga', mangaData.id]">
+      {{ mangaData.attributes.title | mangaTitle: 8 }}
+    </a>
+    <a nz-typography [routerLink]="['/chapter', chapter()?.chapterId]">
+      Chương {{ chapter()?.chapter }}
+    </a>
+  </div>
+  <p nz-paragraph class="date">
+    Ngày đọc {{ chapter()?.readAt | date: 'shortDate' }}
+  </p>
+</nz-flex>
+

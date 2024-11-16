@@ -47,3 +47,24 @@
 [nz-icon] {
   color: #fff;
 }
+
+.fav-btn {
+  border-radius: 50%;
+  outline: none;
+  border: none;
+  background: none;
+  font-size: 28px;
+  background-color: #fff;
+  width: 35px;
+  height: 35px;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+  
+  [nz-icon] {
+    color: #f5222d;
+    font-size: 20px;
+    height: auto                                                                                                                                                                                                                                                                                 ;
+  }
+}

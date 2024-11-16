@@ -16,7 +16,7 @@
     <nz-pagination
       class="pagination"
       [nzPageIndex]="page()"
-      [nzTotal]="chapterList()!.total"
+      [nzTotal]="chapterList()?.total"
       (nzPageIndexChange)="changePage($event)"
       [nzPageSize]="50"></nz-pagination>
   }

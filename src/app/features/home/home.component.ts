@@ -7,7 +7,6 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { NzButtonComponent } from 'ng-zorro-antd/button';
 import {
   Chapter,
   Manga,
@@ -22,7 +21,6 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { SpaceDirective } from '../../shared/directives/space/space.directive';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { Dictionary } from 'lodash';
 import { CarouselComponent } from './components/carousel/carousel.component';
@@ -46,7 +44,6 @@ const MangaPerPage = 50;
   selector: 'app-home',
   standalone: true,
   imports: [
-    NzButtonComponent,
     NzGridModule,
     CarouselComponent,
     NzTypographyModule,
@@ -55,7 +52,6 @@ const MangaPerPage = 50;
     NzFlexModule,
     SpaceDirective,
     MangaCardComponent,
-    NzSpaceModule,
     RouterLink,
     NzPaginationModule,
     AsyncPipe,

@@ -8,6 +8,13 @@
 <div class="info">
   <h1 class="title" nz-typography>
     {{ manga().attributes.title | mangaTitle }}
+    <button class="fav-btn" (click)="toggle()">
+      @if (isFavorite()) {
+        <span nz-icon nzType="heart" nzTheme="fill"></span>
+      } @else {
+        <span nz-icon nzType="heart" nzTheme="outline"></span>
+      }
+    </button>
   </h1>
   <nz-flex nzWrap="wrap">
     @for (tag of manga().attributes.tags; track tag.id) {

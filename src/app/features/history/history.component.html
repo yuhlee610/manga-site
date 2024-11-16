@@ -1,1 +1,17 @@
-<p>history works!</p>
+<div class="cards">
+  @for (manga of historyManga(); track manga.id) {
+    <app-history-card
+      [manga]="manga"
+      [chapter]="history[manga.id]"></app-history-card>
+  }
+</div>
+
+@if (!isDisabled()) {
+  <button
+    nz-button
+    nzSize="large"
+    nzType="primary"
+    (click)="loadMore()">
+    Xem thêm
+  </button>
+}

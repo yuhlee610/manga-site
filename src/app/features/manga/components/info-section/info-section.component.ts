@@ -1,4 +1,11 @@
-import { Component, input, output } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  OnInit,
+  output,
+  signal,
+} from '@angular/core';
 import { DecimalPipe, NgOptimizedImage } from '@angular/common';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
@@ -12,6 +19,7 @@ import { MangaStatusPipe } from '../../../../shared/pipes/manga-status/manga-sta
 import { SpaceDirective } from '../../../../shared/directives/space/space.directive';
 import { Chapter, Manga, MangaStatistic } from '../../../../models/mangadex';
 import { RouterLink } from '@angular/router';
+import { FavoriteService } from '../../../../shared/services/favorite/favorite.service';
 
 @Component({
   selector: 'app-info-section',
@@ -34,16 +42,28 @@ import { RouterLink } from '@angular/router';
   templateUrl: './info-section.component.html',
   styleUrl: './info-section.component.scss',
 })
-export class InfoSectionComponent {
+export class InfoSectionComponent implements OnInit {
+  private favoriteService = inject(FavoriteService);
+
   manga = input.required<Manga>();
   statistic = input.required<MangaStatistic>();
   totalChapter = input.required<number>();
   firstChapter = input<Chapter>();
+  isFavorite = signal(false);
 
   trackHistory = output<string>();
 
   get mangadexLink() {
     return `https://mangadex.org/title/${this.manga().id}`;
+  }
+
+  ngOnInit() {
+    this.isFavorite.set(this.favoriteService.isFavorite()(this.manga().id));
+  }
+
+  toggle() {
+    this.favoriteService.toggleFavorite(this.manga().id);
+    this.isFavorite.set(this.favoriteService.isFavorite()(this.manga().id));
   }
 
   track() {

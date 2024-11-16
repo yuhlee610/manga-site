@@ -1,0 +1,35 @@
+:host {
+  background-color: #1a1a1a;
+  padding: 24px;
+  display: flex;
+  gap: 24px;
+}
+
+img {
+  display: block;
+  object-fit: cover;
+}
+
+h3 {
+  margin-bottom: 28px;
+}
+
+.date {
+  margin-top: 24px;
+  text-align: right;
+}
+
+nz-flex {
+  width: 100%;
+}
+
+a {
+  display: block;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.35;
+  margin-bottom: 32px;
+}

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HistoryKey } from '../../../core/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -18,15 +17,5 @@ export class LocalStorageService {
 
   removeItem(key: string) {
     localStorage.removeItem(key);
-  }
-
-  setHistory(mangaId: string, chapterId: string) {
-    const history = this.getItem(HistoryKey) ?? {};
-    history[mangaId] = {
-      chapterId,
-      readAt: Date.now(),
-    };
-
-    this.setItem(HistoryKey, history);
   }
 }

@@ -1,1 +1,18 @@
-<p>my-list works!</p>
+@if (mangaList()) {
+  <div class="cards">
+    @for (manga of mangaList(); track manga.id) {
+      <app-manga-card
+        [manga]="manga"
+        [latestChapter]="
+          latestChapters()[manga.attributes.latestUploadedChapter]
+        "
+        [statistic]="mangaStatistics()[manga.id]"></app-manga-card>
+    }
+  </div>
+}
+
+@if (!isDisabled()) {
+  <button nz-button nzSize="large" nzType="primary" (click)="loadMore()">
+    Xem thêm
+  </button>
+}

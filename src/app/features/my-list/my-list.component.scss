@@ -1,0 +1,18 @@
+@import '../../../variables.scss';
+
+:host {
+  max-width: 2000px;
+  margin: auto;
+  display: block
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 40px 36px;
+}
+
+button {
+  margin: 36px auto 0;
+  display: block;
+}
